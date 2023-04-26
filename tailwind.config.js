@@ -5,8 +5,10 @@ module.exports = {
     extend: {
       colors:{
         'body':'#0a0a09',
+        'border-light':'#737373',
         'primary':'#005ff8',
-        'body-light':'#141414'
+        'body-light':'#404040',
+        'text-dark':'#A3A3A3'
       },
       fontFamily:{
         poppins:['Poppins','sans-serif']
