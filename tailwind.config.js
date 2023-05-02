@@ -11,7 +11,8 @@ module.exports = {
         'text-dark':'#A3A3A3'
       },
       fontFamily:{
-        poppins:['Poppins','sans-serif']
+        poppins:['Poppins','sans-serif'],
+        bebas:['Bebas Neue']
       }
     },
   },

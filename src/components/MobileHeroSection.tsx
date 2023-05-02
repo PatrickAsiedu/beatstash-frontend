@@ -1,16 +1,19 @@
 import React from "react";
 import SearchInput from "./SearchInput";
+import Container from "./Container";
 
 const MobileHeroSection = () => {
   return (
     <section className="mt-12 md:mt-4 h-96  pt-36 lg:hidden">
-      <h1 className=" text-3xl md:text-5xl md:leading-[55px] font-semibold">
-        #1 MARKETPLACE TO BUY & SELL BEATS
-      </h1>
-      <h2 className="mt-3 mb-4 md:mb-6">
-        Discover over 5 million beats to write your next song to
-      </h2>
-      <SearchInput variation="main"></SearchInput>
+      <Container>
+        <h1 className=" text-4xl w-[85%] md:w-[70%] md:text-6xl md:leading-[55px] font-bebas">
+          #1 MARKETPLACE TO BUY & SELL BEATS
+        </h1>
+        <h2 className="mt-3 mb-4 md:mb-6">
+          Discover over 5 million beats to write your next song to
+        </h2>
+        <SearchInput variation="main"></SearchInput>
+      </Container>
     </section>
   );
 };
