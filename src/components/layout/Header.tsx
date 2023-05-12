@@ -1,5 +1,5 @@
 import React from "react";
-import SearchInput from "./SearchInput";
+import SearchInput from "../SearchInput";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { IconButton } from "@mui/material";
