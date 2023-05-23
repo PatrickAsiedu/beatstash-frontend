@@ -5,6 +5,7 @@ import RootLayout from "./components/layout/RootLayout";
 import SearchResults from "./routes/SearchResults";
 import Beat from "./routes/Beat";
 import Member from "./routes/Member";
+import SignUp from "./routes/SignUp";
 
 const router = createBrowserRouter([
   {
@@ -16,6 +17,7 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       { path: ":userId", element: <Member></Member> },
+
       {
         path: "search",
         element: <SearchResults></SearchResults>,
@@ -23,6 +25,7 @@ const router = createBrowserRouter([
       { path: "beat/:beatId", element: <Beat></Beat> },
     ],
   },
+  { path: "signup", element: <SignUp></SignUp> },
 ]);
 
 //   { path: "/", element: <Home></Home>, children: [] },
