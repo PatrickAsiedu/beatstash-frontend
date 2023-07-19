@@ -6,6 +6,7 @@ import SearchResults from "./routes/SearchResults";
 import Beat from "./routes/Beat";
 import Member from "./routes/Member";
 import SignUp from "./routes/SignUp";
+import Login from "./routes/Login";
 
 const router = createBrowserRouter([
   {
@@ -26,6 +27,7 @@ const router = createBrowserRouter([
     ],
   },
   { path: "signup", element: <SignUp></SignUp> },
+  { path: "signin", element: <Login></Login> },
 ]);
 
 //   { path: "/", element: <Home></Home>, children: [] },
