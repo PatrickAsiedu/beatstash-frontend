@@ -1,18 +1,23 @@
 import React from "react";
 import { Input } from "../ui/Input";
+import { RootState } from "../../store/Store";
+import { AppDispatch } from "../../store/Store";
 import SIgnMediaButton from "../ui/SIgnMediaButton";
-import { useDispatch, useSelector } from "react-redux";
+import {
+  useAppSelector,
+  useAppDispatch,
+} from "../../hooks/useTypedSelectorHook";
 import { loginUser } from "../../features/auth/authSlice";
 
 const SigninForm = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   const email = "randalonthemic@gmail.com";
   const password = "iamkkbb";
 
   const onSigninClicked = () => {
     try {
-      dispatch(loginUser({ email, password })).unwrap();
+      dispatch(loginUser()).unwrap();
     } catch (err) {
       if (err instanceof Error) {
         console.error(err);
