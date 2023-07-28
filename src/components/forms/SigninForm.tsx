@@ -15,9 +15,10 @@ const SigninForm = () => {
   const email = "randalonthemic@gmail.com";
   const password = "iamkkbb";
 
-  const onSigninClicked = () => {
+  const onSigninClicked = (e: React.FormEvent) => {
+    e.preventDefault()
     try {
-      dispatch(loginUser()).unwrap();
+      dispatch(loginUser({email,password})).unwrap();
     } catch (err) {
       if (err instanceof Error) {
         console.error(err);

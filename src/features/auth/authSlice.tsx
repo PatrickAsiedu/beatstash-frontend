@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from "../../network/api";
-
+import { usercredentials } from "../../types/userTypes";
 const initialState = {
   user: null,
   isLoading: false,
@@ -10,7 +10,8 @@ const initialState = {
 
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
-  async (user, thunkAPI) => {
+  async (user:usercredentials, thunkAPI) => {
+    console.log(user)
     try {
       const response = await api.post("login", user);
       return response.data;
