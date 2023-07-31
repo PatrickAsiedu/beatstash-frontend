@@ -8,8 +8,14 @@ import {
   useAppDispatch,
 } from "../../hooks/useTypedSelectorHook";
 import { loginUser } from "../../features/auth/authSlice";
+import { useLocation, useNavigate } from "react-router-dom";
+
 
 const SigninForm = () => {
+
+  const navigate= useNavigate()
+  const location = useLocation()
+  const from = location.state?.from?.pathname || "/"
   const dispatch = useAppDispatch();
 
   const email = "randalonthemic@gmail.com";
@@ -24,6 +30,7 @@ const SigninForm = () => {
         console.error(err);
       }
     }
+    navigate(from , {replace :true})
   };
 
   return (

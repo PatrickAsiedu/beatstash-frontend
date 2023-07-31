@@ -7,6 +7,12 @@ import Beat from "./routes/Beat";
 import Member from "./routes/Member";
 import SignUp from "./routes/SignUp";
 import Login from "./routes/Login";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+const ROLES={
+  "Listener":2000,
+  "Producer":1998,
+}
 
 const router = createBrowserRouter([
   {
@@ -23,9 +29,13 @@ const router = createBrowserRouter([
         path: "search",
         element: <SearchResults></SearchResults>,
       },
-      { path: "beat/:beatId", element: <Beat></Beat> },
+      
+      // { path: "beat/:beatId", element: <ProtectedRoute><Beat></Beat></ProtectedRoute>  },
     ],
   },
+  {element: <ProtectedRoute allowedRoles={[ROLES.Listener]}></ProtectedRoute>,
+  children:[      
+    { path: "beat/:beatId", element: <Beat></Beat> }]},
   { path: "signup", element: <SignUp></SignUp> },
   { path: "signin", element: <Login></Login> },
 ]);
