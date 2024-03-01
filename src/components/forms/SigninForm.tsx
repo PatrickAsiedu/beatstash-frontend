@@ -10,27 +10,25 @@ import {
 import { loginUser } from "../../features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
 
-
 const SigninForm = () => {
-
-  const navigate= useNavigate()
-  const location = useLocation()
-  const from = location.state?.from?.pathname || "/"
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   const dispatch = useAppDispatch();
 
   const email = "randalonthemic@gmail.com";
   const password = "iamkkbb";
 
   const onSigninClicked = (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     try {
-      dispatch(loginUser({email,password})).unwrap();
+      dispatch(loginUser({ email, password })).unwrap();
     } catch (err) {
       if (err instanceof Error) {
         console.error(err);
       }
     }
-  
+
     // navigate(from , {replace :true})
   };
 
@@ -61,8 +59,11 @@ const SigninForm = () => {
       >
         Continue
       </button>
-      <SIgnMediaButton medianame="Google"></SIgnMediaButton>1234
-      <SIgnMediaButton medianame="Facebook"></SIgnMediaButton>
+      <a className="mt-4" href="http://localhost:3500/auth/google/callback">
+        google sign in
+      </a>
+      {/* <SIgnMediaButton medianame="Google"></SIgnMediaButton>1234
+      <SIgnMediaButton medianame="Facebook"></SIgnMediaButton> */}
     </form>
   );
 };
