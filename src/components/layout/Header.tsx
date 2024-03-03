@@ -1,10 +1,11 @@
 import React from "react";
-import SearchInput from "./SearchInput";
+import SearchInput from "../SearchInput";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { IconButton } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "./Container";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (
@@ -28,8 +29,12 @@ const Header = () => {
             <SearchInput variation={"header"}></SearchInput>
           </div>
           <div className="flex space-x-4 lg:space-x-8 md:justify-evenly items-center text-text-dark text-xs font-normal">
-            <button className="">Sign up</button>
-            <button className="hidden md:flex">Sign in</button>
+            <Link to="/signup" className="">
+              Sign up
+            </Link>
+            <Link to="/signin" className="hidden md:flex">
+              Sign in
+            </Link>
             <button className="hidden md:flex bg-primary px-4 py-2 rounded-md text-white">
               Start Selling
             </button>

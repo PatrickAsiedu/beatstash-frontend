@@ -1,7 +1,7 @@
 import React, { ReactNode } from "react";
 import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
 import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
-import Container from "./Container";
+import Container from "./layout/Container";
 
 type HorizontalScrollSectionProps = {
   children: ReactNode;

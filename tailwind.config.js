@@ -8,7 +8,9 @@ module.exports = {
         'border-light':'#737373',
         'primary':'#005ff8',
         'body-light':'#404040',
-        'text-dark':'#A3A3A3'
+        'text-dark':'#A3A3A3',
+        'input-dark':'#0a0a09',
+        'button-dark':'#0a0a09'
       },
       fontFamily:{
         poppins:['Poppins','sans-serif'],
