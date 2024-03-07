@@ -59,11 +59,13 @@ const SigninForm = () => {
       >
         Continue
       </button>
-      <a className="mt-4" href="http://localhost:3500/auth/google/callback">
-        google sign in
-      </a>
-      {/* <SIgnMediaButton medianame="Google"></SIgnMediaButton>1234
-      <SIgnMediaButton medianame="Facebook"></SIgnMediaButton> */}
+
+      <SIgnMediaButton
+        medianame="Google"
+        url={"http://localhost:3500/auth/google"}
+      ></SIgnMediaButton>
+
+      {/* <SIgnMediaButton medianame="Facebook"></SIgnMediaButton> */}
     </form>
   );
 };
