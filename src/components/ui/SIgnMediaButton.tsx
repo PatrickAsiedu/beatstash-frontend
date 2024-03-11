@@ -1,4 +1,3 @@
-import React from "react";
 type SignMediaButton = {
   medianame: string;
   url?: string;

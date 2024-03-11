@@ -2,7 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
-.scrollable::-webkit-scrollbar{
-    display:none
-   
+.scrollable::-webkit-scrollbar {
+  display: none;
 }
+/* 
+body::-webkit-scrollbar {
+  display: none;
+} */
