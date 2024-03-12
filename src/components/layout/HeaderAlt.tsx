@@ -1,6 +1,3 @@
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { IconButton } from "@mui/material";
 import { FiMenu } from "react-icons/fi";
 import Container from "./Container";
 import { Link } from "react-router-dom";
