@@ -1,6 +1,5 @@
 import Container from "./Container";
-import React from "react";
-import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import { MdExpandMore } from "react-icons/md";
 
 const Footer = () => {
   return (
@@ -11,7 +10,7 @@ const Footer = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold">BeatStash</h1>
               <button className=" lg:hidden">
-                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                <MdExpandMore size={20}></MdExpandMore>
               </button>
             </div>
 
@@ -27,7 +26,7 @@ const Footer = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold">BeatStash</h1>
               <button className=" lg:hidden">
-                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                <MdExpandMore size={20}></MdExpandMore>
               </button>
             </div>
 
@@ -48,7 +47,7 @@ const Footer = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold">BeatStash</h1>
               <button className=" lg:hidden">
-                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                <MdExpandMore size={20}></MdExpandMore>
               </button>
             </div>
 
@@ -64,7 +63,7 @@ const Footer = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold">BeatStash</h1>
               <button className=" lg:hidden">
-                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                <MdExpandMore size={20}></MdExpandMore>
               </button>
             </div>
 
@@ -80,7 +79,7 @@ const Footer = () => {
             <div className="flex justify-between">
               <h1 className="font-semibold">BeatStash</h1>
               <button className=" lg:hidden">
-                <KeyboardArrowDownIcon></KeyboardArrowDownIcon>
+                <MdExpandMore size={20}></MdExpandMore>
               </button>
             </div>
 

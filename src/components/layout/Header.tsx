@@ -1,15 +1,13 @@
-import React from "react";
 import SearchInput from "../SearchInput";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
-import { IconButton } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
 import Container from "./Container";
 import { Link } from "react-router-dom";
+import { FiMenu } from "react-icons/fi";
+import { MdOutlineShoppingCart } from "react-icons/md";
+import { MdExpandMore } from "react-icons/md";
 
 const Header = () => {
   return (
-    <header className="   py-4 md:py-3  md:fixed top-0 w-full ">
+    <header className="   py-4 md:py-3  md:fixed top-0 w-full bg-body z-50 ">
       <Container>
         <div className="flex justify-between">
           <div className="relative flex">
@@ -17,14 +15,16 @@ const Header = () => {
               className="
             lg:hidden mr-3"
             >
-              <MenuIcon fontSize={"medium"}></MenuIcon>
+              <FiMenu size={20}></FiMenu>
             </button>
 
-            <img
-              className="mr-4 w-6"
-              src="https://www.beatstars.com/assets/img/bs-logos/bs-logo-red.svg"
-              alt=""
-            />
+            <Link to="/">
+              <img
+                className="mr-4 w-6"
+                src="https://www.beatstars.com/assets/img/bs-logos/bs-logo-red.svg"
+                alt=""
+              />
+            </Link>
 
             <SearchInput variation={"header"}></SearchInput>
           </div>
@@ -38,10 +38,10 @@ const Header = () => {
             <button className="hidden md:flex bg-primary px-4 py-2 rounded-md text-white">
               Start Selling
             </button>
-            <button>
-              <ShoppingCartIcon></ShoppingCartIcon>
+            <button className="flex">
+              <MdOutlineShoppingCart size={20}></MdOutlineShoppingCart>
               <span className="hidden lg:inline-block">
-                <ExpandMoreIcon fontSize={"small"} sx={{}}></ExpandMoreIcon>
+                <MdExpandMore fontSize={"large"}></MdExpandMore>
               </span>
             </button>
           </div>
