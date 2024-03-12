@@ -1,7 +1,7 @@
 import React from "react";
 import Home from "./routes/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import RootLayout from "./components/layout/RootLayout";
+import RootLayout from "./routes/RootLayout";
 import SearchResults from "./routes/SearchResults";
 import Beat from "./routes/Beat";
 import Member from "./routes/Member";
@@ -9,15 +9,18 @@ import SignUp from "./routes/SignUp";
 import Login from "./routes/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import NotFound from "./routes/NotFound";
+import RootLayoutStudio from "./routes/RootLayoutStudio";
+import Studio from "./routes/Studio";
+import Uploads from "./routes/Uploads";
 
 const ROLES = {
   Listener: 2000,
   Producer: 1998,
 };
 
+//NB: Children only applies to rootlayout where outlet is used
 const router = createBrowserRouter([
   {
-    path: "/",
     element: <RootLayout></RootLayout>,
     errorElement: <NotFound></NotFound>,
 
@@ -32,8 +35,6 @@ const router = createBrowserRouter([
         path: "search",
         element: <SearchResults></SearchResults>,
       },
-
-      // { path: "beat/:beatId", element: <ProtectedRoute><Beat></Beat></ProtectedRoute>  },
     ],
   },
   {
@@ -42,12 +43,28 @@ const router = createBrowserRouter([
   },
   { path: "signup", element: <SignUp></SignUp> },
   { path: "signin", element: <Login></Login> },
+  {
+    element: <RootLayoutStudio></RootLayoutStudio>,
+    children: [
+      { path: "/studio", element: <Studio></Studio> },
+      { path: "studio/uploads", element: <Uploads></Uploads> },
+    ],
+  },
+  // {
+  //   element: <RootLayoutStudio></RootLayoutStudio>,
+  //   children: [
+  //     {
+  //       element: (
+  //         <ProtectedRoute allowedRoles={[ROLES.Producer]}></ProtectedRoute>
+  //       ),
+  //       children: [
+  //         { path: "/studio", element: <Studio></Studio> },
+  //         { path: "studio/uploads", element: <Uploads></Uploads> },
+  //       ],
+  //     },
+  //   ],
+  // },
 ]);
-
-//   { path: "/", element: <Home></Home>, children: [] },
-//   { path: "/Search", element: <SearchResults></SearchResults> },
-// ]);
-/* this works the way it shld but if search is a child of home, it'll only render home at /search */
 
 function App() {
   return <RouterProvider router={router} />;

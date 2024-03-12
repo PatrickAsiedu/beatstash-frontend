@@ -1,7 +1,8 @@
-import React, { ReactNode } from "react";
-import ArrowCircleLeftIcon from "@mui/icons-material/ArrowCircleLeft";
-import ArrowCircleRightIcon from "@mui/icons-material/ArrowCircleRight";
+import { ReactNode } from "react";
+
 import Container from "./layout/Container";
+import { FaArrowAltCircleRight } from "react-icons/fa";
+import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 type HorizontalScrollSectionProps = {
   children: ReactNode;
@@ -19,10 +20,10 @@ const HorizontalScrollSection = ({
           <h1 className="font-bold">{title}</h1>
           <div className="hidden md:flex">
             <button>
-              <ArrowCircleLeftIcon fontSize="large"></ArrowCircleLeftIcon>
+              <FaArrowAltCircleLeft size={30}></FaArrowAltCircleLeft>
             </button>
             <button>
-              <ArrowCircleRightIcon fontSize="large"></ArrowCircleRightIcon>
+              <FaArrowAltCircleRight size={30}></FaArrowAltCircleRight>
             </button>
           </div>
         </div>
