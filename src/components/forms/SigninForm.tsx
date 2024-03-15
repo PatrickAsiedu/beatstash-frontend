@@ -48,7 +48,7 @@ const SigninForm = () => {
       <Input
         name="password"
         label="Password"
-        type=""
+        type="password"
         placeholder="Password"
       ></Input>
       <button

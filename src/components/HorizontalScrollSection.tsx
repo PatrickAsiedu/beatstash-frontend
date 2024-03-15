@@ -18,7 +18,7 @@ const HorizontalScrollSection = ({
       <Container>
         <div className="flex justify-between ">
           <h1 className="font-bold">{title}</h1>
-          <div className="hidden md:flex">
+          <div className="hidden md:flex space-x-2">
             <button>
               <FaArrowAltCircleLeft size={30}></FaArrowAltCircleLeft>
             </button>
