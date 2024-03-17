@@ -1,17 +1,18 @@
 import { Outlet } from "react-router";
 import HeaderAlt from "../components/layout/HeaderAlt";
 import ProtectedRoute from "../components/ProtectedRoute";
-import ConatinerAlt from "../components/layout/ConatinerAlt";
+import Container from "../components/layout/Container";
+
 import SideBar from "../components/layout/SideBar";
 
 const RootLayoutStudio = () => {
   return (
     <div className="bg-studiobody ">
-      <ConatinerAlt>
+      <Container custom={"studio"}>
         <HeaderAlt></HeaderAlt>
         <SideBar></SideBar>
         <Outlet></Outlet>
-      </ConatinerAlt>
+      </Container>
     </div>
   );
 };

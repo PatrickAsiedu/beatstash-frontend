@@ -2,13 +2,13 @@ type InputProps = {
   name: string;
   type: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
 };
 
 export function Input({ name, type, label, placeholder }: InputProps) {
   return (
     <div className="w-full ">
-      <label htmlFor="" className=" text-xs">
+      <label htmlFor={name} className=" text-xs">
         {label}
       </label>
       <input
