@@ -1,24 +1,26 @@
-import React from "react";
+import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { DroppedFile } from "../../types/dragndropfileTypes";
 type DropZoneProps = {
   setFiles: React.Dispatch<React.SetStateAction<number>>;
+  formData: FormData;
 };
 
 const DragnDropInput = ({ setFiles }: any) => {
   return (
     <Dropzone
-      onDrop={(acceptedFiles) => {
-        console.log(acceptedFiles);
+      onDrop={(acceptedFiles: File[]) => {
+        // console.log(acceptedFiles);
         acceptedFiles.forEach((file) => {
-          const reader = new FileReader();
+          setFiles((prev: any) => [...prev, file]);
+          // const reader = new FileReader();
 
-          reader.onabort = () => console.log("file reading was aborted");
-          reader.onerror = () => console.log("file reading has failed");
-          reader.onload = () => {
-            setFiles((prev: any) => [...prev, file]);
-          };
-          reader.readAsArrayBuffer(file);
+          // reader.onabort = () => console.log("file reading was aborted");
+          // reader.onerror = () => console.log("file reading has failed");
+          // reader.onload = () => {
+
+          // };
+          // reader.readAsArrayBuffer(file);
         });
       }}
     >
