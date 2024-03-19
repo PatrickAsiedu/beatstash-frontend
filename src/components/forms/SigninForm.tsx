@@ -8,8 +8,32 @@ import {
 } from "../../hooks/useTypedSelectorHook";
 import { loginUser } from "../../features/auth/authSlice";
 import { useLocation, useNavigate } from "react-router-dom";
+import useInput from "../../hooks/useInput";
+import { useEffect, useRef } from "react";
 
 const SigninForm = () => {
+  const {
+    value: emailValue,
+    isValid: emailisValid,
+    hasFocus: emailhasFocus,
+    inputChangeHandler: emailChangeHandler,
+  } = useInput();
+  const {
+    value: passwordValue,
+    isValid: passwordisValid,
+    hasFocus: passwordhasFocus,
+    inputChangeHandler: passwordChangeHandler,
+  } = useInput();
+
+  const emailRef = useRef<HTMLInputElement>(null);
+  const PASSWORD_REGEX =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+
+  useEffect(() => {
+    emailRef.current?.focus();
+    console.log("ref has been set");
+  }, []);
+
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -44,12 +68,15 @@ const SigninForm = () => {
         label="Email"
         type="email"
         placeholder="Email"
+        onChangeHandler={emailChangeHandler}
+        ref={emailRef}
       ></Input>
       <Input
         name="password"
         label="Password"
         type="password"
         placeholder="Password"
+        onChangeHandler={passwordChangeHandler}
       ></Input>
       <button
         className="w-full bg-primary py-2 rounded-md"

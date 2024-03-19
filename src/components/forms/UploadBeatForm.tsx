@@ -1,11 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DragnDropInput from "../ui/DragnDropInput";
 import InputAlt from "../ui/InputAlt";
 import { DroppedFile } from "../../types/dragndropfileTypes";
 import React from "react";
 import { timeLog } from "console";
 import api from "../../network/api";
-import ts from "typescript";
 
 const UploadBeatForm = () => {
   const [files, setFiles] = useState([]);
@@ -25,14 +24,15 @@ const UploadBeatForm = () => {
 
   const formSubtmitHandler = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log(files);
+
     const formData = new FormData();
-    // @ts-ignore
-    formData.append("files", files);
+
+    files.forEach((file) => formData.append("files", file));
+
     data?.forEach((data) =>
       formData.append(`${Object.keys(data)}`, `${Object.values(data)}`)
     );
-
+    console.log(formData.getAll("files"));
     // const post = await api.post("postbeats", formData);
 
     // console.log(formData.get("BPM"));
