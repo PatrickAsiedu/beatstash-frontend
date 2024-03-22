@@ -9,3 +9,17 @@
 body::-webkit-scrollbar {
   display: none;
 } */
+
+progress::-webkit-progress-bar {
+  @apply bg-slate-900;
+}
+
+progress::-webkit-progress-value {
+  @apply bg-white;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  @apply w-20 h-[2px]
+  /* appearance: none; */;
+}
