@@ -1,8 +1,7 @@
 import Container from "../layout/Container";
 import { GoPlus } from "react-icons/go";
-import { BsThreeDots } from "react-icons/bs";
-import { MdOutlineShoppingCart, MdPlayCircle, MdRepeat } from "react-icons/md";
-import { MdOutlineMotionPhotosPause } from "react-icons/md";
+import { MdPlayCircle, MdRepeat } from "react-icons/md";
+import { IoPauseCircleOutline } from "react-icons/io5";
 import { IoPlayCircleOutline } from "react-icons/io5";
 import { MdSkipPrevious } from "react-icons/md";
 import { MdSkipNext } from "react-icons/md";
@@ -13,6 +12,8 @@ import { IoIosVolumeLow } from "react-icons/io";
 import { IoIosVolumeHigh } from "react-icons/io";
 import { PiQueue } from "react-icons/pi";
 import { useEffect, useRef, useState } from "react";
+import CartButton from "../ui/CartButton";
+import { MoreOptionsButton } from "../ui/MoreOptionsButton";
 
 const FloatingAudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -45,11 +46,9 @@ const FloatingAudioPlayer = () => {
         ></progress>
         <div className="flex md:grid md:grid-cols-3 ">
           <div className="flex items-center space-x-5 ">
-            <img
-              src=""
-              alt="art work"
-              className="w-10 h-full rounded-md hidden md:flex"
-            />
+            <div className="w-10 h-full rounded-md hidden md:flex">
+              <img src="" alt="art work" className="" />
+            </div>
             <div className="text-xs md:text-base">
               <h2>Drake feat sibonasss</h2>
               <h1>ANAssii</h1>
@@ -57,13 +56,8 @@ const FloatingAudioPlayer = () => {
             <button className="hidden md:flex">
               <GoPlus fontSize={22}></GoPlus>
             </button>
-            <button>
-              <BsThreeDots></BsThreeDots>
-            </button>
-            <button className="hidden md:flex bg-primary rounded-md px-4 py-1 items-center space-x-2">
-              <MdOutlineShoppingCart fontSize={"1rem"}></MdOutlineShoppingCart>
-              <span>$29.8</span>
-            </button>
+            <MoreOptionsButton></MoreOptionsButton>
+            <CartButton></CartButton>
           </div>
           <div className="flex space-x-3 md:space-x-5 items-center md:justify-center ">
             <button className="hidden md:flex">
@@ -77,9 +71,7 @@ const FloatingAudioPlayer = () => {
             </button>
             <button onClick={onPlayChangeHandler}>
               {isPlaying ? (
-                <MdOutlineMotionPhotosPause
-                  fontSize={"3rem"}
-                ></MdOutlineMotionPhotosPause>
+                <IoPauseCircleOutline fontSize={"3rem"}></IoPauseCircleOutline>
               ) : (
                 <IoPlayCircleOutline fontSize={"3rem"}></IoPlayCircleOutline>
               )}

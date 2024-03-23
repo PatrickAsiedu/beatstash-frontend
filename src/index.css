@@ -12,6 +12,7 @@ body::-webkit-scrollbar {
 
 progress::-webkit-progress-bar {
   @apply bg-slate-900;
+  background-color: #111110;
 }
 
 progress::-webkit-progress-value {

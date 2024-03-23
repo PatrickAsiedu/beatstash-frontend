@@ -2,7 +2,7 @@ import React from "react";
 import Home from "./routes/Home";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./routes/RootLayout";
-import SearchResults from "./routes/SearchResults";
+import Search from "./routes/Search";
 import Beat from "./routes/Beat";
 import Member from "./routes/Member";
 import SignUp from "./routes/SignUp";
@@ -12,6 +12,7 @@ import NotFound from "./routes/NotFound";
 import RootLayoutStudio from "./routes/RootLayoutStudio";
 import Studio from "./routes/Studio";
 import Uploads from "./routes/Uploads";
+import Beats from "./routes/Beats";
 
 const ROLES = {
   Listener: 2000,
@@ -29,11 +30,12 @@ const router = createBrowserRouter([
         path: "/",
         element: <Home></Home>,
       },
+      { path: "beats", element: <Beats></Beats> },
       { path: ":userId", element: <Member></Member> },
 
       {
         path: "search",
-        element: <SearchResults></SearchResults>,
+        element: <Search></Search>,
       },
     ],
   },
