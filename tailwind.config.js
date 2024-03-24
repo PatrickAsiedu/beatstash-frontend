@@ -6,6 +6,9 @@ module.exports = {
       colors: {
         body: "#0a0a09",
         studiobody: "#141414",
+        bodyvar1: "#141414",
+        bodyvar2: "#1a1a1a",
+        bodyvar3: "#262626",
         "border-light": "#737373",
         primary: "#005ff8",
         "body-light": "#404040",

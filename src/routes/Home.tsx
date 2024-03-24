@@ -1,4 +1,3 @@
-import React from "react";
 import Header from "../components/layout/Header";
 
 import MobileHeroSection from "../components/layout/MobileHeroSection";
@@ -9,6 +8,7 @@ import TrackTile from "../components/TrackTile";
 import MemberTile from "../components/MemberTile";
 import CTASection from "../components/layout/CTASection";
 import Footer from "../components/layout/Footer";
+import FloatingAudioPlayer from "../components/audioplayer/FloatingAudioPlayer";
 
 const Home = () => {
   return (
@@ -27,6 +27,7 @@ const Home = () => {
         <TrackTile></TrackTile>
         <TrackTile></TrackTile>
       </HorizontalScrollSection>
+      <FloatingAudioPlayer></FloatingAudioPlayer>
       <HorizontalScrollSection title="Recommended Members">
         <MemberTile></MemberTile>
         <MemberTile></MemberTile>

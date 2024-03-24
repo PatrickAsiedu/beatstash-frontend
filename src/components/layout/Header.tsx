@@ -7,7 +7,7 @@ import { MdExpandMore } from "react-icons/md";
 
 const Header = () => {
   return (
-    <header className="   py-4 md:py-3  md:fixed top-0 w-full bg-body z-50 ">
+    <header className="   py-4 md:py-3  md:fixed top-0 w-full bg-bodyvar1 border-b border-body-light z-50 ">
       <Container>
         <div className="flex justify-between">
           <div className="relative flex">
