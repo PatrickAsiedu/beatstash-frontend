@@ -5,21 +5,23 @@ import { IoGridOutline } from "react-icons/io5";
 import { useGetPostsQuery } from "../features/posts/postSlice";
 import { Post } from "../types/postTypes";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
+import { useState } from "react";
 
 const Search = () => {
+  const [page, setPage] = useState(10);
   const {
     data: posts,
     isLoading,
     isSuccess,
     isError,
     error,
-  } = useGetPostsQuery();
+  } = useGetPostsQuery(page);
 
   isError && console.log(error);
   const ispostdefined = posts !== undefined;
-  console.log(ispostdefined);
+  console.log(posts);
   // if (posts !== undefined) {
-  //   console.log(Object.values(posts.entities));
+  //   console.log(Object.values(posts.data.entities));
   // }
 
   return (
@@ -46,6 +48,11 @@ const Search = () => {
             posts.ids?.map((postId) => (
               <BeatItem key={postId} view={"list"}></BeatItem>
             ))}
+          {/* {ispostdefined &&
+            posts.posts.map((post: any) => (
+              <BeatItem key={post.id} view={"list"}></BeatItem>
+            ))} */}
+          <button onClick={() => setPage(page + 10)}>Load more</button>
         </main>
       </div>
     </Container>

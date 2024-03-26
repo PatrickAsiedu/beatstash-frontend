@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseURL = "https://jsonplaceholder.typicode.com";
+const baseURL = "https://dummyjson.com";
 
 export const apiSlice = createApi({
   reducerPath: "api",
