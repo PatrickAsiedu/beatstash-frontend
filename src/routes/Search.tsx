@@ -6,6 +6,7 @@ import { useGetPostsQuery } from "../features/posts/postSlice";
 import { Post } from "../types/postTypes";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 
 const Search = () => {
   const [page, setPage] = useState(10);
@@ -19,6 +20,7 @@ const Search = () => {
 
   isError && console.log(error);
   const ispostdefined = posts !== undefined;
+
   console.log(posts);
   // if (posts !== undefined) {
   //   console.log(Object.values(posts.data.entities));

@@ -48,7 +48,19 @@ export const postApiSlice = apiSlice.injectEndpoints({
       },
 
       //@ts-ignore
-      providesTags: [{ type: "Posts", id: "PARTIAL-LIST" }],
+      providesTags: (result, error, page) =>
+        result !== undefined
+          ? [
+              // Provides a tag for each post in the current page,
+              // as well as the 'PARTIAL-LIST' tag.
+
+              ...result.ids.map((id) => ({
+                type: "Posts",
+                id,
+              })),
+              { type: "Posts", id: "PARTIAL-LIST" },
+            ]
+          : [{ type: "Posts", id: "PARTIAL-LIST" }],
       //use these tags to refetch either post list or individual post based on inviladte tag
       // providesTags: [{ type: "Posts", id: "PARTIAL-LIST" }],
     }),
@@ -63,31 +75,6 @@ export const postApiSlice = apiSlice.injectEndpoints({
         BODY: initialPost,
       }),
       invalidatesTags: [{ type: "Post", id: "LIST" }], //refetch endpoints that have the posts lists on addnewpost
-    }),
-    updatePost: builder.mutation({
-      query: (initialPost) => ({
-        url: `/posts/${initialPost.id}`,
-        method: "PUT",
-        body: {
-          ...initialPost,
-          date: new Date().toISOString(),
-        },
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Post", id: arg.id },
-        { type: "Post", id: "LIST" },
-      ],
-    }),
-    deletePost: builder.mutation({
-      query: ({ id }) => ({
-        url: `/posts/${id}`,
-        method: "DELETE",
-        body: { id },
-      }),
-      invalidatesTags: (result, error, arg) => [
-        { type: "Post", id: arg.id },
-        { type: "Post", id: "LIST" },
-      ],
     }),
   }),
 });
