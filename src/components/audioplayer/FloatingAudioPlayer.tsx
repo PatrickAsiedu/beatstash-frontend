@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import Container from "../layout/Container";
 import { GoPlus } from "react-icons/go";
 import { MdPlayCircle, MdRepeat } from "react-icons/md";
@@ -11,7 +12,7 @@ import { IoIosVolumeMute } from "react-icons/io";
 import { IoIosVolumeLow } from "react-icons/io";
 import { IoIosVolumeHigh } from "react-icons/io";
 import { PiQueue } from "react-icons/pi";
-import { useEffect, useRef, useState } from "react";
+
 import CartButton from "../ui/CartButton";
 import { MoreOptionsButton } from "../ui/MoreOptionsButton";
 
@@ -37,8 +38,8 @@ const FloatingAudioPlayer = () => {
       ></audio>
       <Container>
         {/* <div className="h-[2px] w-full bg-slate-800 ">
-          <div className=" bg-white w-[70%] h-full rounded-md "></div>
-        </div> */}
+      <div className=" bg-white w-[70%] h-full rounded-md "></div>
+    </div> */}
         <progress
           max="100"
           value="80"
