@@ -3,10 +3,15 @@ import CartButton from "./ui/CartButton";
 import { MoreOptionsButton } from "./ui/MoreOptionsButton";
 import { IoIosPlay } from "react-icons/io";
 import { IoMdPlayCircle } from "react-icons/io";
+import { forwardRef } from "react";
+
 type Props = { view: string };
-const BeatItem = ({ view }: Props) => {
+type Ref = HTMLDivElement;
+const BeatItem = forwardRef<Ref, Props>((props, ref) => {
+  const { view } = props;
   return (
     <div
+      ref={ref}
       className={
         view === "list"
           ? "group w-full py-3 hover:bg-bodyvar1 flex items-center justify-between px-4 rounded-md"
@@ -53,5 +58,5 @@ const BeatItem = ({ view }: Props) => {
       </div>
     </div>
   );
-};
+});
 export default BeatItem;
