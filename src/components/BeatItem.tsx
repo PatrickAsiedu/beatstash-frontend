@@ -8,6 +8,7 @@ import { forwardRef } from "react";
 type Props = { view: string };
 type Ref = HTMLDivElement;
 const BeatItem = forwardRef<Ref, Props>((props, ref) => {
+  // throw new Error("heyyy");
   const { view } = props;
   return (
     <div

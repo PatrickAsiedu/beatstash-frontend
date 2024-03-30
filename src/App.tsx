@@ -13,6 +13,9 @@ import RootLayoutStudio from "./routes/RootLayoutStudio";
 import Studio from "./routes/Studio";
 import Uploads from "./routes/Uploads";
 import Beats from "./routes/Beats";
+import FloatingAudioPlayer from "./components/audioplayer/FloatingAudioPlayer";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "./components/ui/ErrorFallback";
 
 const ROLES = {
   Listener: 2000,
@@ -31,7 +34,10 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       { path: "beats", element: <Beats></Beats> },
-      { path: ":userId", element: <Member></Member> },
+      {
+        path: ":userId",
+        element: <Member></Member>,
+      },
 
       {
         path: "search",
@@ -69,7 +75,13 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <>
+      <RouterProvider router={router} />
+
+      <FloatingAudioPlayer></FloatingAudioPlayer>
+    </>
+  );
 }
 
 export default App;

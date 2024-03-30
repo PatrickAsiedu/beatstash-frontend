@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import useAudioPlayerisLaunched from "../../hooks/useAudiodioPlayerisLaunched";
 import Container from "../layout/Container";
 import { GoPlus } from "react-icons/go";
 import { MdPlayCircle, MdRepeat } from "react-icons/md";
@@ -12,11 +14,11 @@ import { IoIosVolumeMute } from "react-icons/io";
 import { IoIosVolumeLow } from "react-icons/io";
 import { IoIosVolumeHigh } from "react-icons/io";
 import { PiQueue } from "react-icons/pi";
-
 import CartButton from "../ui/CartButton";
 import { MoreOptionsButton } from "../ui/MoreOptionsButton";
 
 const FloatingAudioPlayer = () => {
+  const isLaunched = useAudioPlayerisLaunched();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setisPlaying] = useState(false);
 
@@ -29,8 +31,9 @@ const FloatingAudioPlayer = () => {
   const onPlayChangeHandler = () => {
     setisPlaying((prev) => !prev);
   };
+  console.log(isLaunched);
 
-  return (
+  const content = (
     <div className="w-full  fixed bottom-0 bg-body z-50  py-2 ">
       <audio
         src="https://beatstash.s3.eu-north-1.amazonaws.com/01GingerMe.mp3"
@@ -38,8 +41,8 @@ const FloatingAudioPlayer = () => {
       ></audio>
       <Container>
         {/* <div className="h-[2px] w-full bg-slate-800 ">
-      <div className=" bg-white w-[70%] h-full rounded-md "></div>
-    </div> */}
+  <div className=" bg-white w-[70%] h-full rounded-md "></div>
+</div> */}
         <progress
           max="100"
           value="80"
@@ -100,6 +103,16 @@ const FloatingAudioPlayer = () => {
         </div>
       </Container>
     </div>
+  );
+
+  return (
+    <>
+      {isLaunched &&
+        createPortal(
+          content,
+          document.getElementById("audio-player") as HTMLElement
+        )}
+    </>
   );
 };
 export default FloatingAudioPlayer;
