@@ -4,14 +4,16 @@ import { useAppSelector } from "../../hooks/useTypedSelectorHook";
 
 const initialState = {
   isLaunched: false,
+  postId: NaN,
 };
 
 const audioplayerSlice = createSlice({
   name: "audioplayer",
   initialState,
   reducers: {
-    launchPlayer: (state) => {
-      state.isLaunched = !state.isLaunched;
+    launchPlayer: (state, action: PayloadAction<number>) => {
+      state.isLaunched = true;
+      state.postId = action.payload;
     },
   },
 });

@@ -30,14 +30,19 @@ const Search = () => {
     isError,
     error,
     isFetching,
+    refetch,
   } = useGetPostsQuery(page);
 
   isError && console.log(error);
-  if (isError) {
-    // throw new Response("Bad Request", { status: 400 });
-    //@ts-ignore
-    throw new Error(error.data);
-  }
+  // if (isError) {
+  //   // throw new Response("Bad Request", { status: 400 });
+  //   //@ts-ignore
+  //   throw new Error(error.data);
+  // }
+
+  // if (isLoading) {
+  //   throw new Promise((resolve) => null);
+  // }
 
   const ispostdefined = posts !== undefined;
 
@@ -67,24 +72,32 @@ const Search = () => {
           </div>
           {isLoading && <LoadingSpinner></LoadingSpinner>}
 
-          <ErrorBoundary
+          {/* <ErrorBoundary
             FallbackComponent={ErrorFallback}
             onReset={() => setPage(10)}
             resetKeys={[page]}
           >
-            <BeatItem view={"list"}></BeatItem>
-          </ErrorBoundary>
+            <BeatItem postId={1} view={"list"}></BeatItem>
+          </ErrorBoundary> */}
 
-          {/* {ispostdefined &&
+          {ispostdefined &&
             posts.ids?.map((postId, index) => (
               <BeatItem
+                postId={postId as number}
                 key={postId}
                 ref={index === posts.ids.length - 1 ? lastref : null}
                 view={"list"}
               ></BeatItem>
-            ))} */}
+            ))}
 
           {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)}
+          {isError && (
+            <div className="">
+              <p>Something went wrong:</p>
+              <pre style={{ color: "red" }}>error</pre>
+              <button onClick={() => refetch()}>Try again</button>
+            </div>
+          )}
           {/* {ispostdefined &&
             posts.posts.map((post: any) => (
               <BeatItem key={post.id} view={"list"}></BeatItem>

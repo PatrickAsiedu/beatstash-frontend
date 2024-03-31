@@ -5,7 +5,11 @@ const useAudioPlayerisLaunched = () => {
   const isLaunched = useAppSelector(
     (state: RootState) => state.audioplayerReducer.isLaunched
   );
-  return isLaunched;
+  const postId = useAppSelector(
+    (state: RootState) => state.audioplayerReducer.postId
+  );
+
+  return { isLaunched, postId };
 };
 
 export default useAudioPlayerisLaunched;
