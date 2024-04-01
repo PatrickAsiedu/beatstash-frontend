@@ -8,24 +8,25 @@ import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { Suspense, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useIntersectionObserver } from "usehooks-ts";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorFallback from "../components/ui/ErrorFallback";
+import usePageSlice from "../hooks/usePageSlice";
+import { useAppDispatch } from "../hooks/useTypedSelectorHook";
+import { pageIncrement } from "../features/posts/pageSlice";
 
 const Search = () => {
-  const [page, setPage] = useState(10);
+  const page = usePageSlice();
+  const dispatch = useAppDispatch();
+  // const [page, setPage] = useState(10);
   const { isIntersecting, ref: lastref } = useIntersectionObserver({
     threshold: 0.5,
   });
 
-  console.log(isIntersecting);
-  console.log(page);
-
   useEffect(() => {
     if (isIntersecting) {
-      setPage((prev) => prev + 10);
+      // setPage((prev) => prev + 10);
+      dispatch(pageIncrement(10));
     }
-    // isIntersecting && setPage(page + 10);
-    // console.log(isIntersecting);
-    // console.log(page);
-    console.log(`${isLoading} is loading`);
   }, [isIntersecting]);
 
   const {
@@ -35,11 +36,20 @@ const Search = () => {
     isError,
     error,
     isFetching,
-  } = useGetPostsQuery(page);
-
-  console.log(`${isFetching} is fetching`);
+    refetch,
+  } = useGetPostsQuery(0);
 
   isError && console.log(error);
+  // if (isError) {
+  //   // throw new Response("Bad Request", { status: 400 });
+  //   //@ts-ignore
+  //   throw new Error(error.data);
+  // }
+
+  // if (isLoading) {
+  //   throw new Promise((resolve) => null);
+  // }
+
   const ispostdefined = posts !== undefined;
 
   // console.log(posts);
@@ -66,28 +76,38 @@ const Search = () => {
               </div>
             </div>
           </div>
-          {/* {isLoading && <LoadingSpinner></LoadingSpinner>} */}
-          <Suspense fallback={<LoadingSpinner></LoadingSpinner>}>
-            {ispostdefined &&
-              posts.ids?.map((postId, index) => {
-                if (index === posts.ids.length - 1) {
-                  return (
-                    <BeatItem
-                      key={postId}
-                      ref={lastref}
-                      view={"list"}
-                    ></BeatItem>
-                  );
-                }
-                return <BeatItem key={postId} view={"list"}></BeatItem>;
-              })}
-          </Suspense>
-          {/* {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)} */}
+          {isLoading && <LoadingSpinner></LoadingSpinner>}
+
+          {/* <ErrorBoundary
+            FallbackComponent={ErrorFallback}
+            onReset={() => setPage(10)}
+            resetKeys={[page]}
+          >
+            <BeatItem postId={1} view={"list"}></BeatItem>
+          </ErrorBoundary> */}
+
+          {ispostdefined &&
+            posts.ids?.map((postId, index) => (
+              <BeatItem
+                postId={postId as number}
+                key={postId}
+                ref={index === posts.ids.length - 1 ? lastref : null}
+                view={"list"}
+              ></BeatItem>
+            ))}
+
+          {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)}
+          {isError && (
+            <div className="">
+              <p>Something went wrong:</p>
+              <pre style={{ color: "red" }}>error</pre>
+              <button onClick={() => refetch()}>Try again</button>
+            </div>
+          )}
           {/* {ispostdefined &&
             posts.posts.map((post: any) => (
               <BeatItem key={post.id} view={"list"}></BeatItem>
             ))} */}
-          {/* <button onClick={() => setPage(page + 10)}>Load more</button> */}
         </main>
       </div>
     </Container>

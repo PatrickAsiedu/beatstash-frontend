@@ -1,36 +1,91 @@
 import { useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+import useAudioPlayerisLaunched from "../../hooks/useAudiodioPlayerisLaunched";
 import Container from "../layout/Container";
 import { GoPlus } from "react-icons/go";
-import { MdPlayCircle, MdRepeat } from "react-icons/md";
-import { IoPauseCircleOutline } from "react-icons/io5";
-import { IoPlayCircleOutline } from "react-icons/io5";
-import { MdSkipPrevious } from "react-icons/md";
-import { MdSkipNext } from "react-icons/md";
-import { IoShuffle, IoVolumeHigh } from "react-icons/io5";
+import { MdPlayCircle } from "react-icons/md";
+
+import { IoVolumeHigh } from "react-icons/io5";
 import { IoRepeat } from "react-icons/io5";
 import { IoIosVolumeMute } from "react-icons/io";
 import { IoIosVolumeLow } from "react-icons/io";
 import { IoIosVolumeHigh } from "react-icons/io";
 import { PiQueue } from "react-icons/pi";
-
 import CartButton from "../ui/CartButton";
 import { MoreOptionsButton } from "../ui/MoreOptionsButton";
+import { useGetPostsQuery } from "../../features/posts/postSlice";
+import PlayButton from "./PlayButton";
+import { ShuffleButtton } from "./ShuffleButtton";
+import { PreviousButton } from "./PreviousButton";
+import { NextButton } from "./NextButton";
+import { RepeatButton } from "./RepeatButton";
+import { useAppDispatch } from "../../hooks/useTypedSelectorHook";
+import usePageSlice from "../../hooks/usePageSlice";
+import { pageIncrement } from "../../features/posts/pageSlice";
 
 const FloatingAudioPlayer = () => {
+  const page = usePageSlice();
+  const dispatch = useAppDispatch();
+  const { isLaunched, postId } = useAudioPlayerisLaunched();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setisPlaying] = useState(false);
+  const [index, setIndex] = useState<number>(NaN);
+
+  const {
+    data: posts,
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+    isFetching,
+  } = useGetPostsQuery(page);
 
   // const audio = new Audio()
+  // console.log(posts);
 
   useEffect(() => {
     isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
   }, [isPlaying, audioRef]);
 
+  useEffect(() => {
+    console.log(posts?.entities[posts?.ids[index]]);
+    console.log(index);
+  }, [index, posts]);
+
+  useEffect(() => {
+    if (isLaunched && postId) {
+      setIndex(posts?.ids.indexOf(postId) ?? 0);
+    }
+  }, [postId]);
+
+  useEffect(() => {
+    if (posts !== undefined && index === posts?.ids.length - 2) {
+      console.log("fire me");
+      dispatch(pageIncrement(10));
+    }
+  }, [posts, index]);
+
   const onPlayChangeHandler = () => {
     setisPlaying((prev) => !prev);
   };
 
-  return (
+  const onNextButtonHandler = () => {
+    if (posts !== undefined && index === posts?.ids.length - 1) {
+      setIndex(0);
+    } else {
+      setIndex((prev) => prev + 1);
+    }
+  };
+
+  const onPreviousButtonHandler = () => {
+    if (posts !== undefined && index === 0) {
+      setIndex(posts.ids.length - 1);
+    } else {
+      setIndex((prev) => prev - 1);
+    }
+  };
+
+  const content = (
     <div className="w-full  fixed bottom-0 bg-body z-50  py-2 ">
       <audio
         src="https://beatstash.s3.eu-north-1.amazonaws.com/01GingerMe.mp3"
@@ -38,8 +93,8 @@ const FloatingAudioPlayer = () => {
       ></audio>
       <Container>
         {/* <div className="h-[2px] w-full bg-slate-800 ">
-      <div className=" bg-white w-[70%] h-full rounded-md "></div>
-    </div> */}
+  <div className=" bg-white w-[70%] h-full rounded-md "></div>
+</div> */}
         <progress
           max="100"
           value="80"
@@ -61,31 +116,16 @@ const FloatingAudioPlayer = () => {
             <CartButton></CartButton>
           </div>
           <div className="flex space-x-3 md:space-x-5 items-center md:justify-center ">
-            <button className="hidden md:flex">
-              <IoShuffle
-                fontSize={"1.2rem"}
-                className="text-gray-400"
-              ></IoShuffle>
-            </button>
-            <button>
-              <MdSkipPrevious fontSize={"1.5rem"}></MdSkipPrevious>
-            </button>
-            <button onClick={onPlayChangeHandler}>
-              {isPlaying ? (
-                <IoPauseCircleOutline fontSize={"3rem"}></IoPauseCircleOutline>
-              ) : (
-                <IoPlayCircleOutline fontSize={"3rem"}></IoPlayCircleOutline>
-              )}
-            </button>
-            <button>
-              <MdSkipNext fontSize={"1.5rem"}></MdSkipNext>
-            </button>
-            <button className="hidden md:flex">
-              <MdRepeat
-                fontSize={"1.2rem"}
-                className="text-gray-400 "
-              ></MdRepeat>
-            </button>
+            <ShuffleButtton></ShuffleButtton>
+            <PreviousButton
+              onPreviousButtonHandler={onPreviousButtonHandler}
+            ></PreviousButton>
+            <PlayButton
+              isPlaying={isPlaying}
+              onPlayChangeHandler={onPlayChangeHandler}
+            ></PlayButton>
+            <NextButton onNextButtonHandler={onNextButtonHandler}></NextButton>
+            <RepeatButton></RepeatButton>
           </div>
           <div className=" hidden md:flex items-center space-x-5  md:justify-end">
             <button>
@@ -100,6 +140,16 @@ const FloatingAudioPlayer = () => {
         </div>
       </Container>
     </div>
+  );
+
+  return (
+    <>
+      {isLaunched &&
+        createPortal(
+          content,
+          document.getElementById("audio-player") as HTMLElement
+        )}
+    </>
   );
 };
 export default FloatingAudioPlayer;
