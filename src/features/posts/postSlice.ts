@@ -1,6 +1,10 @@
 import { apiSlice } from "../api/apiSlice";
 import { Post } from "../../types/postTypes";
-import { createEntityAdapter, createSelector } from "@reduxjs/toolkit";
+import {
+  createEntityAdapter,
+  createSelector,
+  createSlice,
+} from "@reduxjs/toolkit";
 import type { EntityAdapter, EntityState } from "@reduxjs/toolkit";
 import { useSelector } from "react-redux";
 
@@ -24,7 +28,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //return type and args type
     getPosts: builder.query<EntityState<Post>, number>({
-      query: (page = 10) => `posts?limit=10&skip=${page}`,
+      query: (page = 0) => `posts?limit=10&skip=${page}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },

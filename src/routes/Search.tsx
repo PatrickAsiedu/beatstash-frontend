@@ -10,16 +10,22 @@ import { useSelector } from "react-redux";
 import { useIntersectionObserver } from "usehooks-ts";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../components/ui/ErrorFallback";
+import usePageSlice from "../hooks/usePageSlice";
+import { useAppDispatch } from "../hooks/useTypedSelectorHook";
+import { pageIncrement } from "../features/posts/pageSlice";
 
 const Search = () => {
-  const [page, setPage] = useState(10);
+  const page = usePageSlice();
+  const dispatch = useAppDispatch();
+  // const [page, setPage] = useState(10);
   const { isIntersecting, ref: lastref } = useIntersectionObserver({
     threshold: 0.5,
   });
 
   useEffect(() => {
     if (isIntersecting) {
-      setPage((prev) => prev + 10);
+      // setPage((prev) => prev + 10);
+      dispatch(pageIncrement(10));
     }
   }, [isIntersecting]);
 
@@ -31,7 +37,7 @@ const Search = () => {
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(page);
+  } = useGetPostsQuery(0);
 
   isError && console.log(error);
   // if (isError) {

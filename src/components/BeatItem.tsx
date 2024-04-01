@@ -8,14 +8,16 @@ import { useGetPostsQuery } from "../features/posts/postSlice";
 import { Post } from "../types/postTypes";
 import { useDispatch } from "react-redux";
 import { launchPlayer } from "../features/player/audioplayerSlice";
+import usePageSlice from "../hooks/usePageSlice";
 
 type Props = { view: string; postId: number };
 type Ref = HTMLDivElement;
 const BeatItem = forwardRef<Ref, Props>((props, ref) => {
   const { view, postId } = props;
+  const page = usePageSlice();
 
   const emptyArray: Post[] = []; // to prevent recreating the array when callback is called,
-  const { posts } = useGetPostsQuery(10, {
+  const { posts } = useGetPostsQuery(page, {
     selectFromResult: ({
       data,
       isLoading,

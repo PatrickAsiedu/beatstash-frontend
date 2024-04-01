@@ -3,11 +3,14 @@ import authReducer from "../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { apiSlice } from "../features/api/apiSlice";
 import audioplayerReducer from "../features/player/audioplayerSlice";
+import pageReducer from "../features/posts/pageSlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     audioplayerReducer,
+    pageReducer,
+
     [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>

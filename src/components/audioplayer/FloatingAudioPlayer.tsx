@@ -19,13 +19,17 @@ import { ShuffleButtton } from "./ShuffleButtton";
 import { PreviousButton } from "./PreviousButton";
 import { NextButton } from "./NextButton";
 import { RepeatButton } from "./RepeatButton";
+import { useAppDispatch } from "../../hooks/useTypedSelectorHook";
+import usePageSlice from "../../hooks/usePageSlice";
+import { pageIncrement } from "../../features/posts/pageSlice";
 
 const FloatingAudioPlayer = () => {
+  const page = usePageSlice();
+  const dispatch = useAppDispatch();
   const { isLaunched, postId } = useAudioPlayerisLaunched();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setisPlaying] = useState(false);
   const [index, setIndex] = useState<number>(NaN);
-  const [currentSong, setCurrentSong] = useState({});
 
   const {
     data: posts,
@@ -34,9 +38,7 @@ const FloatingAudioPlayer = () => {
     isError,
     error,
     isFetching,
-  } = useGetPostsQuery(10);
-
-  // console.log(isLaunched);
+  } = useGetPostsQuery(page);
 
   // const audio = new Audio()
   // console.log(posts);
@@ -45,52 +47,41 @@ const FloatingAudioPlayer = () => {
     isPlaying ? audioRef.current?.play() : audioRef.current?.pause();
   }, [isPlaying, audioRef]);
 
-  // useEffect(() => {
-  //   console.log(currentSong);
-  //   console.log(index);
-  // }, [currentSong, index]);
+  useEffect(() => {
+    console.log(posts?.entities[posts?.ids[index]]);
+    console.log(index);
+  }, [index, posts]);
 
-  // useEffect(() => {
-  //   if (isLaunched && postId) {
-  //     console.log(" irun");
-  //     setCurrentSong(posts?.entities[postId] ?? {});
-  //     setIndex(posts?.ids.indexOf(postId) ?? 0);
-  //   }
-  //   console.log("outta loop");
-  // }, []);
+  useEffect(() => {
+    if (isLaunched && postId) {
+      setIndex(posts?.ids.indexOf(postId) ?? 0);
+    }
+  }, [postId]);
+
+  useEffect(() => {
+    if (posts !== undefined && index === posts?.ids.length - 2) {
+      console.log("fire me");
+      dispatch(pageIncrement(10));
+    }
+  }, [posts, index]);
 
   const onPlayChangeHandler = () => {
     setisPlaying((prev) => !prev);
-    setCurrentSong(posts?.entities[postId] ?? {});
-    setIndex(posts?.ids.indexOf(postId) ?? 0);
-    console.log(currentSong);
-    console.log(index);
   };
 
   const onNextButtonHandler = () => {
-    // setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
-
-    if (posts !== undefined && index > posts?.ids.length - 1) {
+    if (posts !== undefined && index === posts?.ids.length - 1) {
       setIndex(0);
-      setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
     } else {
       setIndex((prev) => prev + 1);
-      setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
     }
-    console.log(currentSong);
-    console.log(index);
   };
 
   const onPreviousButtonHandler = () => {
-    // setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
-    console.log(currentSong);
-    console.log(index);
-    if (posts !== undefined && index < 0) {
+    if (posts !== undefined && index === 0) {
       setIndex(posts.ids.length - 1);
-      setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
     } else {
       setIndex((prev) => prev - 1);
-      setCurrentSong(posts?.entities[posts?.ids[index]] ?? {});
     }
   };
 
