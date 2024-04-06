@@ -10,7 +10,7 @@ import { useDispatch } from "react-redux";
 import { launchPlayer } from "../features/player/audioplayerSlice";
 import usePageSlice from "../hooks/usePageSlice";
 
-type Props = { view: string; postId: number };
+type Props = { view?: string; postId: number };
 type Ref = HTMLDivElement;
 const BeatItem = forwardRef<Ref, Props>((props, ref) => {
   const { view, postId } = props;
@@ -50,7 +50,7 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
           <div className="w-10 h-full rounded-md hidden md:flex ">
             <img
               src="https://beatstash.s3.eu-north-1.amazonaws.com/neom-rVC6O_gDE0Q-unsplash.jpg"
-              alt="art work"
+              alt="artwork"
               className={view === "list" ? "" : view === "box" ? "" : ""}
             />
           </div>
@@ -65,7 +65,27 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
         </div>
       </div>
     ) : view === "box" ? (
-      <div></div>
+      <div className="cursor-pointer  hover:bg-bodyvar1   group h-[24rems] p-4 rounded-md">
+        <div className="relative  flex items-center justify-center rounded-lg w-full h-52">
+          <img
+            className=" object-cover object-center w-full h-full rounded-lg"
+            src="https://beatstash.s3.eu-north-1.amazonaws.com/neom-rVC6O_gDE0Q-unsplash.jpg"
+            alt="artwork"
+          />{" "}
+          <button
+            onClick={() => dispatch(launchPlayer(postId))}
+            className="absolute opacity-0 group-hover:opacity-100"
+          >
+            <IoIosPlay fontSize={"3rem"} className=""></IoIosPlay>
+          </button>
+        </div>
+        <div className="flex mt-4 justify-between">
+          <button className="text-primary">$4.3</button>
+          <h2 className="text-text-dark">160BPM</h2>
+        </div>
+        <h1 className="font-semibold mt-1">FALLEN HERE OKAY</h1>
+        <h2 className="text-text-dark mt-1">Excatsy</h2>
+      </div>
     ) : (
       <p></p>
     );

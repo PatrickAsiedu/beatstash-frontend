@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./routes/RootLayout";
 import Search from "./routes/Search";
 import Beat from "./routes/Beat";
-import Member from "./routes/Member";
+import Producer from "./routes/Producer";
 import SignUp from "./routes/SignUp";
 import Login from "./routes/Login";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -16,6 +16,7 @@ import Beats from "./routes/Beats";
 import FloatingAudioPlayer from "./components/audioplayer/FloatingAudioPlayer";
 import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "./components/ui/ErrorFallback";
+import Cart from "./routes/Cart";
 
 const ROLES = {
   Listener: 2000,
@@ -34,14 +35,20 @@ const router = createBrowserRouter([
         element: <Home></Home>,
       },
       { path: "beats", element: <Beats></Beats> },
+      { path: "beats/:beatId", element: <Beat></Beat> },
+
       {
         path: ":userId",
-        element: <Member></Member>,
+        element: <Producer></Producer>,
       },
 
       {
         path: "search",
         element: <Search></Search>,
+      },
+      {
+        path: "cart",
+        element: <Cart></Cart>,
       },
     ],
   },

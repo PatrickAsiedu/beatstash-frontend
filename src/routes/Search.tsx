@@ -1,7 +1,5 @@
 import BeatItem from "../components/BeatItem";
 import Container from "../components/layout/Container";
-import { HiOutlineViewList } from "react-icons/hi";
-import { IoGridOutline } from "react-icons/io5";
 import { useGetPostsQuery } from "../features/posts/postSlice";
 import { Post } from "../types/postTypes";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
@@ -13,6 +11,11 @@ import ErrorFallback from "../components/ui/ErrorFallback";
 import usePageSlice from "../hooks/usePageSlice";
 import { useAppDispatch } from "../hooks/useTypedSelectorHook";
 import { pageIncrement } from "../features/posts/pageSlice";
+import ContainerGrid from "../components/layout/ContainerGrid";
+import SideContainer from "../components/layout/SideContainer";
+import PageMainContainer from "../components/layout/PageMainContainer";
+import { SortAndView } from "./SortAndView";
+import BeatItemsContainer from "../components/layout/BeatItemsContainer";
 
 const Search = () => {
   const page = usePageSlice();
@@ -59,42 +62,35 @@ const Search = () => {
 
   return (
     <Container>
-      <div className="pt-4 lg:grid lg:grid-cols-5 gap-6 relative">
-        <aside className="hidden lg:block bg-bodyvar1 h-screen w-full rounded-md"></aside>
-        <main className=" col-span-4  ">
+      <ContainerGrid>
+        <SideContainer>
+          <div></div>
+        </SideContainer>
+        <PageMainContainer>
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-semibold">Tracks</h1>
-            <div className="flex space-x-5">
-              <h2>Sorty by</h2>
-              <div className="flex bg-studiobody">
-                <button className="border border-border-light p-2">
-                  <HiOutlineViewList></HiOutlineViewList>
-                </button>
-                <button className="border border-border-light p-2">
-                  <IoGridOutline></IoGridOutline>
-                </button>
-              </div>
-            </div>
+            <SortAndView></SortAndView>
           </div>
           {isLoading && <LoadingSpinner></LoadingSpinner>}
-
           {/* <ErrorBoundary
-            FallbackComponent={ErrorFallback}
-            onReset={() => setPage(10)}
-            resetKeys={[page]}
-          >
-            <BeatItem postId={1} view={"list"}></BeatItem>
-          </ErrorBoundary> */}
+              FallbackComponent={ErrorFallback}
+              onReset={() => setPage(10)}
+              resetKeys={[page]}
+            >
+              <BeatItem postId={1} view={"list"}></BeatItem>
+            </ErrorBoundary> */}
 
-          {ispostdefined &&
-            posts.ids?.map((postId, index) => (
-              <BeatItem
-                postId={postId as number}
-                key={postId}
-                ref={index === posts.ids.length - 1 ? lastref : null}
-                view={"list"}
-              ></BeatItem>
-            ))}
+          <BeatItemsContainer view={"list"}>
+            {ispostdefined &&
+              posts.ids?.map((postId, index) => (
+                <BeatItem
+                  postId={postId as number}
+                  key={postId}
+                  ref={index === posts.ids.length - 1 ? lastref : null}
+                  view={"list"}
+                ></BeatItem>
+              ))}
+          </BeatItemsContainer>
 
           {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)}
           {isError && (
@@ -105,11 +101,11 @@ const Search = () => {
             </div>
           )}
           {/* {ispostdefined &&
-            posts.posts.map((post: any) => (
-              <BeatItem key={post.id} view={"list"}></BeatItem>
-            ))} */}
-        </main>
-      </div>
+              posts.posts.map((post: any) => (
+                <BeatItem key={post.id} view={"list"}></BeatItem>
+              ))} */}
+        </PageMainContainer>
+      </ContainerGrid>
     </Container>
   );
 };

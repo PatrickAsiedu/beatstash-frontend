@@ -8,11 +8,9 @@ import SideBar from "../components/layout/SideBar";
 const RootLayoutStudio = () => {
   return (
     <div className="bg-studiobody ">
-      <Container custom={"studio"}>
-        <HeaderAlt></HeaderAlt>
-        <SideBar></SideBar>
-        <Outlet></Outlet>
-      </Container>
+      <HeaderAlt></HeaderAlt>
+      <SideBar></SideBar>
+      <Outlet></Outlet>
     </div>
   );
 };
