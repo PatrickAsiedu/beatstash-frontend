@@ -2,17 +2,19 @@ import React, { useState } from "react";
 import Dropzone from "react-dropzone";
 import { DroppedFile } from "../../types/dragndropfileTypes";
 type DropZoneProps = {
-  setFiles: React.Dispatch<React.SetStateAction<number>>;
-  formData: FormData;
+  setFiles: React.Dispatch<React.SetStateAction<File[]>>;
+  formData?: FormData;
+  divstyle: string;
+  label: string;
 };
 
-const DragnDropInput = ({ setFiles }: any) => {
+const DragnDropInput = ({ setFiles, divstyle, label }: DropZoneProps) => {
   return (
     <Dropzone
       onDrop={(acceptedFiles: File[]) => {
         // console.log(acceptedFiles);
         acceptedFiles.forEach((file) => {
-          setFiles((prev: any) => [...prev, file]);
+          setFiles((prev) => [...prev, file]);
           // const reader = new FileReader();
 
           // reader.onabort = () => console.log("file reading was aborted");
@@ -26,11 +28,8 @@ const DragnDropInput = ({ setFiles }: any) => {
     >
       {({ getRootProps, getInputProps }) => (
         <section>
-          <label htmlFor="mp3input">Upload mp3</label>
-          <div
-            className="w-full border border-slate-800 h-32 flex items-center justify-center rounded-lg cursor-pointer"
-            {...getRootProps()}
-          >
+          <label htmlFor="mp3input">{label}</label>
+          <div className={divstyle} {...getRootProps()}>
             <input id="mp3input" {...getInputProps()} />
             <p>Drag 'n' drop some files here, or click to select files</p>
           </div>

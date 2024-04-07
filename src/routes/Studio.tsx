@@ -1,6 +1,14 @@
+import Container from "../components/layout/Container";
+import { StudioMainContainer } from "../components/layout/StudioMainContainer";
+import { MdOutlineDriveFolderUpload } from "react-icons/md";
+
 const Studio = () => {
   return (
-    <main className="lg:w-[80%] ml-[21%]   h-screen mt-[72px]">Studio</main>
+    <StudioMainContainer>
+      <Container custom={"studio"}>
+        <div className=""></div>
+      </Container>
+    </StudioMainContainer>
   );
 };
 

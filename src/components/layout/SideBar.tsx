@@ -26,7 +26,7 @@ const navLinks = [
 
 const SideBar = () => {
   return (
-    <nav className="hidden lg:w-[20%] md:block lg:fixed  h-[100vh] mt-[72px] top-0 px-4 pt-10 border  ">
+    <nav className="hidden lg:w-[20%] md:block lg:fixed  h-[100vh] mt-[72px] top-0 left-4 px-4 pt-10 border ">
       {navLinks.map((nav) => (
         <NavItem key={nav.id} navitem={nav}></NavItem>
       ))}

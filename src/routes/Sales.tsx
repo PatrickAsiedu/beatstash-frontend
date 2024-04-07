@@ -1,4 +1,10 @@
+import { StudioMainContainer } from "../components/layout/StudioMainContainer";
+
 const Sales = () => {
-  return <div>Sales</div>;
+  return (
+    <StudioMainContainer>
+      <div>Sales</div>
+    </StudioMainContainer>
+  );
 };
 export default Sales;

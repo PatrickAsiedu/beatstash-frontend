@@ -1,10 +1,11 @@
 import UploadBeatForm from "../components/forms/UploadBeatForm";
+import { StudioMainContainer } from "../components/layout/StudioMainContainer";
 
 const Uploads = () => {
   return (
-    <div className="lg:w-[80%] lg:ml-[21%]   h-screen mt-[72px] bg-stuidobody pt-10 ">
+    <StudioMainContainer>
       <UploadBeatForm></UploadBeatForm>
-    </div>
+    </StudioMainContainer>
   );
 };
 

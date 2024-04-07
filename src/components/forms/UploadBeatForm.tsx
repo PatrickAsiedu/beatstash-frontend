@@ -7,7 +7,9 @@ import { timeLog } from "console";
 import api from "../../network/api";
 
 const UploadBeatForm = () => {
-  const [files, setFiles] = useState([]);
+  const [mp3, setMp3] = useState<File[]>([]);
+  const [artwork, setArtwork] = useState<File[]>([]);
+  const [wav, setWav] = useState<File[]>([]);
   const [title, setTitle] = useState("");
   const [tags, setTags] = useState("");
   const [genre, setGenre] = useState("");
@@ -27,7 +29,7 @@ const UploadBeatForm = () => {
 
     const formData = new FormData();
 
-    files.forEach((file) => formData.append("files", file));
+    // files.forEach((file) => formData.append("files", file));
 
     data?.forEach((data) =>
       formData.append(`${Object.keys(data)}`, `${Object.values(data)}`)
@@ -50,7 +52,6 @@ const UploadBeatForm = () => {
       encType="multipart/form-data"
       className="w-full lg:w-[750px]  mx-auto px-4 flex flex-col bg-studiobody rounded-lg  pt-6 space-y-6 pb-10 shadow-2xl"
     >
-      <DragnDropInput setFiles={setFiles}></DragnDropInput>
       <InputAlt
         name="Title"
         type="text"
@@ -62,6 +63,27 @@ const UploadBeatForm = () => {
         }
         onChangeHandler={setTitle}
       ></InputAlt>
+      <DragnDropInput
+        label="Upload Artwork"
+        divstyle={
+          "w-full lg:w-[40%] px-8 border border-slate-800 h-64  flex items-center justify-center rounded-lg cursor-pointer"
+        }
+        setFiles={setArtwork}
+      ></DragnDropInput>
+      <DragnDropInput
+        label="Upload mp3"
+        divstyle={
+          "w-full border border-slate-800 h-20 flex items-center justify-center rounded-lg cursor-pointer"
+        }
+        setFiles={setMp3}
+      ></DragnDropInput>
+      <DragnDropInput
+        label="Upload Wav"
+        divstyle={
+          "w-full border border-slate-800 h-20 flex items-center justify-center rounded-lg cursor-pointer"
+        }
+        setFiles={setMp3}
+      ></DragnDropInput>
 
       <InputAlt
         name="Tags"
@@ -109,7 +131,6 @@ const UploadBeatForm = () => {
           onChangeHandler={setBPM}
         ></InputAlt>
       </div>
-
       <div className="mt-20">CONTRACTS</div>
       <div className="flex justify-end ">
         <button className="bg-primary py-2 px-4 rounded-md">Publish</button>
