@@ -24,11 +24,16 @@ interface PostResponse {
   posts: Post[];
 }
 
+type PostQueryParams = {
+  page: number;
+  search?: string;
+};
+
 export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //return type and args type
-    getPosts: builder.query<EntityState<Post>, number>({
-      query: (page = 0) => `posts?limit=10&skip=${page}`,
+    getPosts: builder.query<EntityState<Post>, PostQueryParams>({
+      query: ({ page, search }) => `beats?search=${search}&page=${page}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
@@ -48,6 +53,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
       transformResponse: (responseData: PostResponse) => {
         //any other transformation goes here
         const loadedposts = responseData.posts;
+        console.log(loadedposts);
         return postsAdapter.setAll(initialState, loadedposts);
       },
 

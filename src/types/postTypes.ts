@@ -1,6 +1,7 @@
 export type Post = {
-  userId: number;
-  id: number;
+  _id: number;
+  user: null;
   title: string;
-  body: string;
+  tags: string[];
+  score: number;
 };

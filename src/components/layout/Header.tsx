@@ -10,7 +10,7 @@ const Header = () => {
     <header className="   py-4 md:py-3  md:fixed top-0 w-full bg-bodyvar1 border-b border-body-light z-50 ">
       <Container>
         <div className="flex justify-between items-center">
-          <div className="relative flex">
+          <div className="relative flex items-center">
             <button
               className="
             lg:hidden mr-3"

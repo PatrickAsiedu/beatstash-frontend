@@ -40,7 +40,7 @@ const Beats = () => {
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(0);
+  } = useGetPostsQuery({ page: page });
 
   isError && console.log(error);
   // if (isError) {

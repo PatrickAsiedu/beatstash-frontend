@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const BASEURL = "http://localhost:3500";
+let baseUrl;
+
+process.env.NODE_ENV === "development"
+  ? (baseUrl = "http://localhost:3500")
+  : (baseUrl = "http://beatstashserver.onrender.com");
 
 export default axios.create({
-  baseURL: BASEURL,
+  baseURL: baseUrl,
   headers: { "Content-Type": "application/json" },
   withCredentials: true,
 });

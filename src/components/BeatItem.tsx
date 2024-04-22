@@ -17,19 +17,22 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
   const page = usePageSlice();
 
   const emptyArray: Post[] = []; // to prevent recreating the array when callback is called,
-  const { posts } = useGetPostsQuery(page, {
-    selectFromResult: ({
-      data,
-      isLoading,
-      isSuccess,
-      isError,
-      error,
-      isFetching,
-    }) => ({
-      posts: data?.entities[postId] ?? emptyArray, // use usememo if u try to filter or sth
-      //u can return other i.e is loading
-    }),
-  });
+  const { posts } = useGetPostsQuery(
+    { page: page },
+    {
+      selectFromResult: ({
+        data,
+        isLoading,
+        isSuccess,
+        isError,
+        error,
+        isFetching,
+      }) => ({
+        posts: data?.entities[postId] ?? emptyArray, // use usememo if u try to filter or sth
+        //u can return other i.e is loading
+      }),
+    }
+  );
 
   const dispatch = useDispatch();
 

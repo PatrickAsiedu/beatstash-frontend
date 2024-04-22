@@ -38,7 +38,7 @@ const FloatingAudioPlayer = () => {
     isError,
     error,
     isFetching,
-  } = useGetPostsQuery(page);
+  } = useGetPostsQuery({ page: page });
 
   // const audio = new Audio()
   // console.log(posts);

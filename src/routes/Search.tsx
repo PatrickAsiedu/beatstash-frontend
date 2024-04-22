@@ -16,6 +16,7 @@ import SideContainer from "../components/layout/SideContainer";
 import PageMainContainer from "../components/layout/PageMainContainer";
 import { SortAndView } from "./SortAndView";
 import BeatItemsContainer from "../components/layout/BeatItemsContainer";
+import { useLocation } from "react-router-dom";
 
 const Search = () => {
   const page = usePageSlice();
@@ -32,6 +33,12 @@ const Search = () => {
     }
   }, [isIntersecting]);
 
+  const location = useLocation();
+  console.log(location);
+  const queryParams = new URLSearchParams(location.search);
+  const search = queryParams.get("q") ?? "";
+  console.log(search);
+
   const {
     data: posts,
     isLoading,
@@ -40,7 +47,9 @@ const Search = () => {
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(0);
+  } = useGetPostsQuery({ page, search });
+
+  console.log(posts);
 
   isError && console.log(error);
   // if (isError) {
@@ -64,7 +73,12 @@ const Search = () => {
     <Container>
       <ContainerGrid>
         <SideContainer>
-          <div></div>
+          <div>
+            <h1 className=" font-semibold text-lg">Categories</h1>
+          </div>
+          <div>
+            <h1 className=" font-semibold text-lg mt-28">Filters</h1>
+          </div>
         </SideContainer>
         <PageMainContainer>
           <div className="flex justify-between items-center mb-4">

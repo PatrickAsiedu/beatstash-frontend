@@ -1,10 +1,14 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
-const baseURL = "https://dummyjson.com";
+let baseUrl;
+
+process.env.NODE_ENV === "development"
+  ? (baseUrl = "http://localhost:3500")
+  : (baseUrl = "http://beatstashserver.onrender.com");
 
 export const apiSlice = createApi({
   reducerPath: "api",
-  baseQuery: fetchBaseQuery({ baseUrl: baseURL }),
+  baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({}),
 });
