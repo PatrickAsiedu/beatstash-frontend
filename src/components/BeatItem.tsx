@@ -16,8 +16,8 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
   const { view, postId } = props;
   const page = usePageSlice();
 
-  const emptyArray: Post[] = []; // to prevent recreating the array when callback is called,
-  const { posts } = useGetPostsQuery(
+  const emptyObject = {}; // to prevent recreating the array when callback is called,
+  const { post }: { post: Post | {} } = useGetPostsQuery(
     { page: page },
     {
       selectFromResult: ({
@@ -28,7 +28,7 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
         error,
         isFetching,
       }) => ({
-        posts: data?.entities[postId] ?? emptyArray, // use usememo if u try to filter or sth
+        post: data?.entities[postId] ?? emptyObject, // use usememo if u try to filter or sth
         //u can return other i.e is loading
       }),
     }
@@ -58,7 +58,7 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
             />
           </div>
           <div className="text-xs md:text-base">
-            <h2>Drake feat sibonasss</h2>
+            <h2>{(post as Post).title}</h2>
             <h1>ANAssii</h1>
           </div>
         </div>

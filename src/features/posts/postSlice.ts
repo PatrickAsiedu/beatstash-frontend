@@ -33,7 +33,7 @@ export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //return type and args type
     getPosts: builder.query<EntityState<Post>, PostQueryParams>({
-      query: ({ page, search }) => `beats?search=${search}&page=${page}`,
+      query: ({ page, search = "" }) => `beats?search=${search}&page=${page}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
