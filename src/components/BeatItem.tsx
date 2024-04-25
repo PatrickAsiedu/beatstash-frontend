@@ -10,29 +10,43 @@ import { useDispatch } from "react-redux";
 import { launchPlayer } from "../features/player/audioplayerSlice";
 import usePageSlice from "../hooks/usePageSlice";
 
-type Props = { view?: string; postId: number };
+type Props = { view?: string; postId: number; post: Post };
 type Ref = HTMLDivElement;
 const BeatItem = forwardRef<Ref, Props>((props, ref) => {
-  const { view, postId } = props;
+  const { view, postId, post } = props;
   const page = usePageSlice();
 
-  const emptyObject = {}; // to prevent recreating the array when callback is called,
-  const { post }: { post: Post | {} } = useGetPostsQuery(
-    { page: page },
-    {
-      selectFromResult: ({
-        data,
-        isLoading,
-        isSuccess,
-        isError,
-        error,
-        isFetching,
-      }) => ({
-        post: data?.entities[postId] ?? emptyObject, // use usememo if u try to filter or sth
-        //u can return other i.e is loading
-      }),
-    }
-  );
+  // const emptyObject = {}; // to prevent recreating the array when callback is called,
+  // const { post }: { post: Post | {} } = useGetPostsQuery(
+  //   { page },
+  //   {
+  //     selectFromResult: ({
+  //       data,
+  //       isLoading,
+  //       isSuccess,
+  //       isError,
+  //       error,
+  //       isFetching,
+  //     }) => ({
+  //       post: data?.entities[postId] ?? emptyObject, // use usememo if u try to filter or sth
+  //       //u can return other i.e is loading
+  //       isFetching,
+  //     }),
+  //   }
+  // );
+
+  // const {
+  //   data: posts,
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  //   error,
+  //   isFetching,
+  // } = useGetPostsQuery({ page });
+
+  // const post = posts?.entities[postId];
+
+  // console.log(isFetching);
 
   const dispatch = useDispatch();
 

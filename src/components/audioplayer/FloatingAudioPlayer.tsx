@@ -21,7 +21,7 @@ import { NextButton } from "./NextButton";
 import { RepeatButton } from "./RepeatButton";
 import { useAppDispatch } from "../../hooks/useTypedSelectorHook";
 import usePageSlice from "../../hooks/usePageSlice";
-import { pageIncrement } from "../../features/posts/pageSlice";
+import { postPageIncrement } from "../../features/posts/pageSlice";
 
 const FloatingAudioPlayer = () => {
   const page = usePageSlice();
@@ -30,15 +30,18 @@ const FloatingAudioPlayer = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setisPlaying] = useState(false);
   const [index, setIndex] = useState<number>(NaN);
+  const [location, setLocation] = useState(window.location.pathname);
 
-  const {
-    data: posts,
-    isLoading,
-    isSuccess,
-    isError,
-    error,
-    isFetching,
-  } = useGetPostsQuery({ page: page });
+  // const {
+  //   data: posts,
+  //   isLoading,
+  //   isSuccess,
+  //   isError,
+  //   error,
+  //   isFetching,
+  // } = useGetPostsQuery({ page }, { skip: true });
+
+  const posts = { ids: [], entities: {} };
 
   // const audio = new Audio()
   // console.log(posts);
@@ -52,16 +55,15 @@ const FloatingAudioPlayer = () => {
     console.log(index);
   }, [index, posts]);
 
-  useEffect(() => {
-    if (isLaunched && postId) {
-      setIndex(posts?.ids.indexOf(postId) ?? 0);
-    }
-  }, [postId]);
+  // useEffect(() => {
+  //   if (isLaunched && postId) {
+  //     setIndex(posts?.ids.indexOf(postId) ?? 0);
+  //   }
+  // }, [postId]);
 
   useEffect(() => {
     if (posts !== undefined && index === posts?.ids.length - 2) {
-      console.log("fire me");
-      dispatch(pageIncrement(10));
+      dispatch(postPageIncrement(1));
     }
   }, [posts, index]);
 
