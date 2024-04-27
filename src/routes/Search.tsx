@@ -1,6 +1,6 @@
 import BeatItem from "../components/BeatItem";
 import Container from "../components/layout/Container";
-import { useGetPostsQuery } from "../features/posts/postSlice";
+import { useSearchPostsQuery } from "../features/posts/postSlice";
 import { Post } from "../types/postTypes";
 import LoadingSpinner from "../components/ui/LoadingSpinner";
 import { Suspense, useEffect, useState } from "react";
@@ -10,15 +10,20 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../components/ui/ErrorFallback";
 import usePageSlice from "../hooks/usePageSlice";
 import { useAppDispatch } from "../hooks/useTypedSelectorHook";
-import { pageIncrement } from "../features/posts/pageSlice";
+import {
+  searchpostPageIncrement as PageIncrement,
+  setLocation,
+} from "../features/posts/pageSlice";
 import ContainerGrid from "../components/layout/ContainerGrid";
 import SideContainer from "../components/layout/SideContainer";
 import PageMainContainer from "../components/layout/PageMainContainer";
 import { SortAndView } from "./SortAndView";
 import BeatItemsContainer from "../components/layout/BeatItemsContainer";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Search = () => {
-  const page = usePageSlice();
+  const navigate = useNavigate();
+  const { searchPage: page } = usePageSlice();
   const dispatch = useAppDispatch();
   // const [page, setPage] = useState(10);
   const { isIntersecting, ref: lastref } = useIntersectionObserver({
@@ -28,19 +33,51 @@ const Search = () => {
   useEffect(() => {
     if (isIntersecting) {
       // setPage((prev) => prev + 10);
-      dispatch(pageIncrement(10));
+      dispatch(PageIncrement(1));
     }
   }, [isIntersecting]);
 
+  const location = useLocation();
+  // console.log(location);
+  const queryParams = new URLSearchParams(location.search);
+  const search = queryParams.get("q") ?? "";
+
+  useEffect(() => {
+    dispatch(setLocation(location));
+  });
+
+  // console.log(search);
+
+  //this is for if you want to access page via queryparam
+  // const page =
+  // queryParams.get("page") === null
+  //   ? 1
+  //   : parseInt(queryParams.get("page") as string);
+
+  // useEffect(() => {
+
+  //   console.log(`page is ${page}`);
+
+  //   if (isIntersecting) {
+  //     page && search === ""
+  //       ? navigate(`/search?page=${page + 1}`)
+  //       : navigate(`/search?q=${search}&page=${page + 1}`);
+  //   }
+  // }, [isIntersecting]);
+
   const {
-    data: posts,
+    data: postresponse,
     isLoading,
     isSuccess,
     isError,
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(0);
+  } = useSearchPostsQuery({ page, search });
+
+  const posts = postresponse?.loadedposts;
+
+  // console.log(posts);
 
   isError && console.log(error);
   // if (isError) {
@@ -64,14 +101,19 @@ const Search = () => {
     <Container>
       <ContainerGrid>
         <SideContainer>
-          <div></div>
+          <div>
+            <h1 className=" font-semibold text-lg">Categories</h1>
+          </div>
+          <div>
+            <h1 className=" font-semibold text-lg mt-28">Filters</h1>
+          </div>
         </SideContainer>
         <PageMainContainer>
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-semibold">Tracks</h1>
             <SortAndView></SortAndView>
           </div>
-          {isLoading && <LoadingSpinner></LoadingSpinner>}
+          {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)}
           {/* <ErrorBoundary
               FallbackComponent={ErrorFallback}
               onReset={() => setPage(10)}
@@ -84,6 +126,7 @@ const Search = () => {
             {ispostdefined &&
               posts.ids?.map((postId, index) => (
                 <BeatItem
+                  post={posts?.entities[postId] as Post}
                   postId={postId as number}
                   key={postId}
                   ref={index === posts.ids.length - 1 ? lastref : null}
@@ -100,6 +143,7 @@ const Search = () => {
               <button onClick={() => refetch()}>Try again</button>
             </div>
           )}
+
           {/* {ispostdefined &&
               posts.posts.map((post: any) => (
                 <BeatItem key={post.id} view={"list"}></BeatItem>

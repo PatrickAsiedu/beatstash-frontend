@@ -12,13 +12,13 @@ import { useIntersectionObserver } from "usehooks-ts";
 import ErrorFallback from "../components/ui/ErrorFallback";
 import usePageSlice from "../hooks/usePageSlice";
 import { useAppDispatch } from "../hooks/useTypedSelectorHook";
-import { pageIncrement } from "../features/posts/pageSlice";
+import { postPageIncrement } from "../features/posts/pageSlice";
 import BeatItem from "../components/BeatItem";
 import { SortAndView } from "./SortAndView";
 import BeatItemsContainer from "../components/layout/BeatItemsContainer";
 
 const Beats = () => {
-  const page = usePageSlice();
+  const { postPage: page } = usePageSlice();
   const dispatch = useAppDispatch();
   // const [page, setPage] = useState(10);
   const { isIntersecting, ref: lastref } = useIntersectionObserver({
@@ -28,19 +28,21 @@ const Beats = () => {
   useEffect(() => {
     if (isIntersecting) {
       // setPage((prev) => prev + 10);
-      dispatch(pageIncrement(10));
+      dispatch(postPageIncrement(1));
     }
   }, [isIntersecting]);
 
   const {
-    data: posts,
+    data: postsresponse,
     isLoading,
     isSuccess,
     isError,
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(0);
+  } = useGetPostsQuery(page);
+
+  const posts = postsresponse?.loadedposts;
 
   isError && console.log(error);
   // if (isError) {
@@ -55,7 +57,7 @@ const Beats = () => {
 
   const ispostdefined = posts !== undefined;
 
-  // console.log(posts);
+  console.log(posts);
   // if (posts !== undefined) {
   //   console.log(Object.values(posts.data.entities));
   // }
@@ -73,6 +75,7 @@ const Beats = () => {
           {ispostdefined &&
             posts.ids?.map((postId, index) => (
               <BeatItem
+                post={posts?.entities[postId] as Post}
                 postId={postId as number}
                 key={postId}
                 ref={index === posts.ids.length - 1 ? lastref : null}

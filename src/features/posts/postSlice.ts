@@ -13,22 +13,37 @@ import { useSelector } from "react-redux";
 
 //pass sort functions to obj to sort on normalized data
 const postsAdapter = createEntityAdapter<Post>({});
+const searchpostsAdapter = createEntityAdapter<Post>({});
 
-const initialState = postsAdapter.getInitialState();
+const postsInitialState = postsAdapter.getInitialState();
+const searchInitialState = searchpostsAdapter.getInitialState();
 
 interface PostResponse {
   page: number;
-  per_page: number;
+  perPage: number;
   total: number;
   total_pages: number;
   posts: Post[];
 }
 
+interface PostReturn {
+  page: number;
+  perPage: number;
+  total: number;
+  total_pages: number;
+  loadedposts: EntityState<Post>;
+}
+
+type PostQueryParams = {
+  page: number;
+  search?: string;
+};
+
 export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //return type and args type
-    getPosts: builder.query<EntityState<Post>, number>({
-      query: (page = 0) => `posts?limit=10&skip=${page}`,
+    getPosts: builder.query<PostReturn, number>({
+      query: (page = 1) => `beats?page=${page}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },
@@ -37,7 +52,14 @@ export const postApiSlice = apiSlice.injectEndpoints({
       merge: (currentCache, newItems) => {
         // console.log(newItems.posts);
         // currentCache.posts.push(...newItems.posts);
-        postsAdapter.addMany(currentCache, postsSelectors.selectAll(newItems));
+        currentCache.page = newItems.page;
+        currentCache.perPage = newItems.perPage;
+        currentCache.total = newItems.total;
+        currentCache.total_pages = newItems.total_pages;
+        currentCache.loadedposts = postsAdapter.addMany(
+          currentCache.loadedposts,
+          postsSelectors.selectAll(newItems.loadedposts)
+        );
       },
       // Refetch when the page arg changes
       forceRefetch({ currentArg, previousArg }) {
@@ -47,12 +69,65 @@ export const postApiSlice = apiSlice.injectEndpoints({
       //@ts-ignore
       transformResponse: (responseData: PostResponse) => {
         //any other transformation goes here
-        const loadedposts = responseData.posts;
-        return postsAdapter.setAll(initialState, loadedposts);
+        const { page, perPage, total, total_pages, posts } = responseData;
+        // console.log(loadedposts);
+        const loadedposts = postsAdapter.setAll(postsInitialState, posts);
+
+        return { page, perPage, total, total_pages, loadedposts };
       },
 
       //@ts-ignore
+
+      //use these tags to refetch either post list or individual post based on inviladte tag
       providesTags: [{ type: "Posts", id: "PARTIAL-LIST" }],
+    }),
+
+    searchPosts: builder.query<PostReturn, PostQueryParams>({
+      query: ({ page, search = "" }) => `beats?search=${search}&page=${page}`,
+      serializeQueryArgs: ({ endpointName }) => {
+        return endpointName;
+      },
+
+      merge: (currentCache, newItems, args) => {
+        const { page } = args.arg; //we can use this managing page state with query params
+
+        currentCache.page = newItems.page;
+        currentCache.perPage = newItems.perPage;
+        currentCache.total = newItems.total;
+        currentCache.total_pages = newItems.total_pages;
+
+        if (newItems.page === 1) {
+          currentCache.loadedposts = searchpostsAdapter.setAll(
+            currentCache.loadedposts,
+            postsSelectors.selectAll(newItems.loadedposts)
+          );
+        } else {
+          currentCache.loadedposts = searchpostsAdapter.addMany(
+            currentCache.loadedposts,
+            postsSelectors.selectAll(newItems.loadedposts)
+          );
+        }
+      },
+
+      forceRefetch({ currentArg, previousArg }) {
+        return currentArg !== previousArg;
+      },
+      //transform data before caching
+      //@ts-ignore
+      transformResponse: (responseData: PostResponse) => {
+        //any other transformation goes here
+        const { page, perPage, total, total_pages, posts } = responseData;
+        // console.log(loadedposts);
+        const loadedposts = searchpostsAdapter.setAll(
+          searchInitialState,
+          posts
+        );
+
+        return { page, perPage, total, total_pages, loadedposts };
+      },
+
+      //@ts-ignore
+      providesTags: [{ type: "Post", id: "PARTIAL-LIST" }],
       //use these tags to refetch either post list or individual post based on inviladte tag
       // providesTags: [{ type: "Posts", id: "PARTIAL-LIST" }],
     }),
@@ -98,4 +173,4 @@ export const postApiSlice = apiSlice.injectEndpoints({
 
 const postsSelectors = postsAdapter.getSelectors();
 
-export const { useGetPostsQuery } = postApiSlice;
+export const { useGetPostsQuery, useSearchPostsQuery } = postApiSlice;

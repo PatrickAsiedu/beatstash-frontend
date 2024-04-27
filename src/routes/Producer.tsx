@@ -18,7 +18,8 @@ const Producer = () => {
             <h1 className="text-2xl font-semibold">Tracks</h1>
           </div>
           <BeatItemsContainer view={"box"}>
-            <BeatItem view={"box"} postId={1}></BeatItem>
+            <div></div>
+            {/* <BeatItem view={"box"} postId={1}></BeatItem> */}
           </BeatItemsContainer>
         </PageMainContainer>
       </ContainerGrid>
