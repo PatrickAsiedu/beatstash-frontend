@@ -8,6 +8,10 @@ const usePageSlice = () => {
   const searchPage = useAppSelector(
     (state: RootState) => state.pageReducer.searchPage
   );
-  return { postPage, searchPage };
+
+  const location = useAppSelector(
+    (state: RootState) => state.pageReducer.location
+  );
+  return { postPage, searchPage, location };
 };
 export default usePageSlice;

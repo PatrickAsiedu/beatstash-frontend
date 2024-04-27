@@ -10,7 +10,10 @@ import { ErrorBoundary } from "react-error-boundary";
 import ErrorFallback from "../components/ui/ErrorFallback";
 import usePageSlice from "../hooks/usePageSlice";
 import { useAppDispatch } from "../hooks/useTypedSelectorHook";
-import { searchpostPageIncrement as PageIncrement } from "../features/posts/pageSlice";
+import {
+  searchpostPageIncrement as PageIncrement,
+  setLocation,
+} from "../features/posts/pageSlice";
 import ContainerGrid from "../components/layout/ContainerGrid";
 import SideContainer from "../components/layout/SideContainer";
 import PageMainContainer from "../components/layout/PageMainContainer";
@@ -39,29 +42,11 @@ const Search = () => {
   const queryParams = new URLSearchParams(location.search);
   const search = queryParams.get("q") ?? "";
 
-  // console.log(search);
+  useEffect(() => {
+    dispatch(setLocation(location));
+  });
 
-  // const emptyObject = {}; // to prevent recreating the array when callback is called,
-  // const { posts, isFetching, isLoading, isError, error } = useGetPostsQuery(
-  //   { page: page },
-  //   {
-  //     selectFromResult: ({
-  //       data,
-  //       isLoading,
-  //       isSuccess,
-  //       isError,
-  //       error,
-  //       isFetching,
-  //     }) => ({
-  //       posts: data, // use usememo if u try to filter or sth
-  //       //u can return other i.e is loading
-  //       isFetching,
-  //       isLoading,
-  //       isError,
-  //       error,
-  //     }),
-  //   }
-  // );
+  // console.log(search);
 
   //this is for if you want to access page via queryparam
   // const page =
@@ -151,13 +136,14 @@ const Search = () => {
           </BeatItemsContainer>
 
           {isLoading || (isFetching && <LoadingSpinner></LoadingSpinner>)}
-          {/* {isError && (
+          {isError && (
             <div className="">
               <p>Something went wrong:</p>
               <pre style={{ color: "red" }}>error</pre>
               <button onClick={() => refetch()}>Try again</button>
             </div>
-          )} */}
+          )}
+
           {/* {ispostdefined &&
               posts.posts.map((post: any) => (
                 <BeatItem key={post.id} view={"list"}></BeatItem>

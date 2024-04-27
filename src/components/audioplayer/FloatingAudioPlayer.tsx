@@ -24,13 +24,12 @@ import usePageSlice from "../../hooks/usePageSlice";
 import { postPageIncrement } from "../../features/posts/pageSlice";
 
 const FloatingAudioPlayer = () => {
-  const page = usePageSlice();
+  const { postPage, searchPage, location } = usePageSlice();
   const dispatch = useAppDispatch();
   const { isLaunched, postId } = useAudioPlayerisLaunched();
   const audioRef = useRef<HTMLAudioElement>(null);
   const [isPlaying, setisPlaying] = useState(false);
   const [index, setIndex] = useState<number>(NaN);
-  const [location, setLocation] = useState(window.location.pathname);
 
   // const {
   //   data: posts,
@@ -45,6 +44,10 @@ const FloatingAudioPlayer = () => {
 
   // const audio = new Audio()
   // console.log(posts);
+
+  useEffect(() => {
+    console.log(location);
+  });
 
   useEffect(() => {
     isPlaying ? audioRef.current?.play() : audioRef.current?.pause();

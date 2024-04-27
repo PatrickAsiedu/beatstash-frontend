@@ -16,10 +16,13 @@ const pageSlice = createSlice({
     searchpostPageIncrement: (state, action) => {
       state.searchPage = state.searchPage + action.payload;
     },
-    setlocation: () => {},
+    setLocation: (state, action) => {
+      state.location = action.payload;
+    },
   },
 });
 
-export const { postPageIncrement, searchpostPageIncrement } = pageSlice.actions;
+export const { postPageIncrement, searchpostPageIncrement, setLocation } =
+  pageSlice.actions;
 
 export default pageSlice.reducer;

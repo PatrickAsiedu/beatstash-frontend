@@ -88,7 +88,9 @@ export const postApiSlice = apiSlice.injectEndpoints({
         return endpointName;
       },
 
-      merge: (currentCache, newItems) => {
+      merge: (currentCache, newItems, args) => {
+        const { page } = args.arg; //we can use this managing page state with query params
+
         currentCache.page = newItems.page;
         currentCache.perPage = newItems.perPage;
         currentCache.total = newItems.total;
