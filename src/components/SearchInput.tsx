@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { resetSearchPage } from "../features/posts/pageSlice";
+import { useAppDispatch } from "../hooks/useTypedSelectorHook";
 
 type SearchInputProps = {
   variation: string;
@@ -7,12 +9,14 @@ type SearchInputProps = {
 
 const SearchInput = ({ variation }: SearchInputProps) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [search, setsearch] = useState("");
   const [searchCategory, setSearchCategory] = useState("tracks");
   const queryParams = new URLSearchParams();
 
   const onSubmitSeacrhHandler = (e: React.FormEvent) => {
     e.preventDefault();
+    dispatch(resetSearchPage());
     navigate(`/search?q=${search}`);
   };
 
