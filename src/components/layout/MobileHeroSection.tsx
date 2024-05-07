@@ -3,7 +3,7 @@ import Container from "./Container";
 
 const MobileHeroSection = () => {
   return (
-    <section className="mt-12 md:mt-4 h-96  pt-36 lg:hidden">
+    <section className="  h-96  pt-24 lg:hidden">
       <Container>
         <h1 className=" text-4xl w-[85%] md:w-[70%] md:text-6xl md:leading-[55px] font-bebas">
           #1 MARKETPLACE TO BUY & SELL BEATS

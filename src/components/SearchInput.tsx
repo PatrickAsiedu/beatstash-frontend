@@ -21,7 +21,15 @@ const SearchInput = ({ variation }: SearchInputProps) => {
   };
 
   return (
-    <form onSubmit={onSubmitSeacrhHandler} action="" className=" relative">
+    <form
+      onSubmit={onSubmitSeacrhHandler}
+      action=""
+      className={
+        variation === "header"
+          ? " absolute top-14  w-[260px]  md:static   md:w-96"
+          : " "
+      }
+    >
       <input
         onChange={(e) => setsearch(e.target.value)}
         type="text"
@@ -32,7 +40,7 @@ const SearchInput = ({ variation }: SearchInputProps) => {
         }
         className={
           variation === "header"
-            ? " bg-body-light w-54 lg:w-96 rounded-full py-3 px-4 border-[0.5px] text-xs border-neutral-500 absolute top-12 md:static focus:outline-none appearance-none placeholder:text-xs  placeholder:text-text-dark"
+            ? " bg-body-light w-full md:w-full rounded-full py-3 px-4 border-[0.5px] text-xs border-neutral-500  md:static focus:outline-none appearance-none placeholder:text-xs  placeholder:text-text-dark"
             : " bg-white w-full lg:w-[650px] py-[18px] lg:py-6  px-4 rounded-md text-xs   focus:outline-none appearance-none placeholder:text-xs  placeholder:text-text-dark"
         }
       />
@@ -43,7 +51,7 @@ const SearchInput = ({ variation }: SearchInputProps) => {
         onChange={(e) => setSearchCategory(e.target.value)}
         className={
           variation === "header"
-            ? "absolute top-2 right-4 bg-body-light text-text-dark "
+            ? "md:absolute md:top-3 md:right-4 bg-body-light text-text-dark hidden md:block"
             : `hidden`
         }
       >

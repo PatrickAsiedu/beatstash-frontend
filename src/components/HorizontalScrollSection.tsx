@@ -14,7 +14,7 @@ const HorizontalScrollSection = ({
   title,
 }: HorizontalScrollSectionProps) => {
   return (
-    <section className="md:mt-14 mb-10 ">
+    <section className="mt-4 md:mt-14 mb-10 ">
       <Container>
         <div className="flex justify-between ">
           <h1 className="font-bold">{title}</h1>

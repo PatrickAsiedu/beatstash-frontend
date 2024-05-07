@@ -108,7 +108,7 @@ const Search = () => {
             <h1 className=" font-semibold text-lg mt-28">Filters</h1>
           </div>
         </SideContainer>
-        <PageMainContainer>
+        <PageMainContainer context={"shared"}>
           <div className="flex justify-between items-center mb-4">
             <h1 className="text-2xl font-semibold">Tracks</h1>
             <SortAndView></SortAndView>
