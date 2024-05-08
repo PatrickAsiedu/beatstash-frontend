@@ -16,6 +16,7 @@ import { postPageIncrement } from "../features/posts/pageSlice";
 import BeatItem from "../components/BeatItem";
 import { SortAndView } from "./SortAndView";
 import BeatItemsContainer from "../components/layout/BeatItemsContainer";
+import { useLocation } from "react-router-dom";
 
 const Beats = () => {
   const { postPage: page } = usePageSlice();
@@ -32,6 +33,13 @@ const Beats = () => {
     }
   }, [isIntersecting]);
 
+  const location = useLocation();
+
+  const queryParams = new URLSearchParams(location.search);
+  const key = queryParams.get("key") ?? "";
+  const bpm = queryParams.get("bpm") ?? "";
+  const genres = queryParams.get("genres") ?? "";
+
   const {
     data: postsresponse,
     isLoading,
@@ -40,7 +48,7 @@ const Beats = () => {
     error,
     isFetching,
     refetch,
-  } = useGetPostsQuery(page);
+  } = useGetPostsQuery({ page, key, bpm, genres });
 
   const posts = postsresponse?.loadedposts;
 
@@ -64,7 +72,7 @@ const Beats = () => {
   return (
     <Container>
       <div className="pt-4"></div>
-      <PageMainContainer>
+      <PageMainContainer context={"full"}>
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-2xl font-semibold">Tracks</h1>
           <SortAndView></SortAndView>

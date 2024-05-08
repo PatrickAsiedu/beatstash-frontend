@@ -37,13 +37,17 @@ interface PostReturn {
 type PostQueryParams = {
   page: number;
   search?: string;
+  key?: string;
+  bpm?: string;
+  genres?: string;
 };
 
 export const postApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
     //return type and args type
-    getPosts: builder.query<PostReturn, number>({
-      query: (page = 1) => `beats?page=${page}`,
+    getPosts: builder.query<PostReturn, PostQueryParams>({
+      query: ({ key, bpm, genres, page = 1 }) =>
+        `beats?page=${page}&key=${key}&bpm=${bpm}genres=${genres}`,
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
       },

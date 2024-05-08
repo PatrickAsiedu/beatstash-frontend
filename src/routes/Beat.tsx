@@ -12,7 +12,7 @@ const Beat = () => {
         <SideContainer>
           <div></div>
         </SideContainer>
-        <PageMainContainer>
+        <PageMainContainer context="shared">
           <div className="w-full h-16 rounded-full bg-bodyvar1 "></div>
           <div className=" w-full h-96 pt-10 bg-bodyvar1 px-6 rounded-md mt-8">
             <div className="flex justify-between items-center mb-4 ">
