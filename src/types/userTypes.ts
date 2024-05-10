@@ -1,9 +1,10 @@
-export type usercredentials ={
-    email:string,
-    password:string
-}
+export type usercredentials = {
+  email: string;
+  password: string;
+};
 
-export type User={
-    email:string
-    roles:number[]
-}
+export type User = {
+  email: string;
+  username: string;
+  roles: number[];
+};

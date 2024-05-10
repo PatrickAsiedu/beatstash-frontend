@@ -9,12 +9,14 @@ import { Post } from "../types/postTypes";
 import { useDispatch } from "react-redux";
 import { launchPlayer } from "../features/player/audioplayerSlice";
 import usePageSlice from "../hooks/usePageSlice";
+import { useNavigate } from "react-router-dom";
 
 type Props = { view?: string; postId: number; post: Post };
 type Ref = HTMLDivElement;
 const BeatItem = forwardRef<Ref, Props>((props, ref) => {
   const { view, postId, post } = props;
   const page = usePageSlice();
+  const navigate = useNavigate();
 
   // const emptyObject = {}; // to prevent recreating the array when callback is called,
   // const { post }: { post: Post | {} } = useGetPostsQuery(
@@ -48,6 +50,11 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
 
   // console.log(isFetching);
 
+  const onProducerCLickedHandler = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    navigate(`/${post.user.username}`);
+  };
+
   const dispatch = useDispatch();
 
   const content =
@@ -73,7 +80,9 @@ const BeatItem = forwardRef<Ref, Props>((props, ref) => {
           </div>
           <div className="text-xs md:text-base">
             <h2>{(post as Post).title}</h2>
-            <h1>ANAssii</h1>
+            <h1 className="hover:underline" onClick={onProducerCLickedHandler}>
+              {post.user.username}
+            </h1>
           </div>
         </div>
         <div className="flex space-x-3 ">

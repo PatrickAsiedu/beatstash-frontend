@@ -1,7 +1,7 @@
 export type Post = {
   id: number;
   _id: number;
-  user: null;
+  user: { username: string };
   title: string;
   tags: string[];
   score: number;
