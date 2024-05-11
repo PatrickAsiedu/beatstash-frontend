@@ -5,8 +5,14 @@ import SideContainer from "../components/layout/SideContainer";
 import PageMainContainer from "../components/layout/PageMainContainer";
 import BeatItem from "../components/BeatItem";
 import BeatItemsContainer from "../components/layout/BeatItemsContainer";
+import { useGetUserQuery } from "../features/users/userSlice";
+import { useParams } from "react-router-dom";
 
 const Producer = () => {
+  const { userId: userName } = useParams();
+  console.log(userName);
+
+  const { data: user } = useGetUserQuery(userName ?? "");
   return (
     <Container>
       <ContainerGrid>

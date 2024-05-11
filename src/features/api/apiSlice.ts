@@ -9,6 +9,6 @@ process.env.NODE_ENV === "development"
 export const apiSlice = createApi({
   reducerPath: "api",
   baseQuery: fetchBaseQuery({ baseUrl: baseUrl }),
-  tagTypes: ["Post"],
+  tagTypes: ["Post", "User"],
   endpoints: (builder) => ({}),
 });
